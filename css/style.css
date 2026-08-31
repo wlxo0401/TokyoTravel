@@ -1,0 +1,145 @@
+/* 라이트 모드 고정 · 모바일 우선 (PC에서는 가운데 정렬 카드) */
+
+:root {
+  --bg: #f4f5f7;
+  --card: #ffffff;
+  --ink: #1c2024;
+  --muted: #6b7280;
+  --line: #e5e7eb;
+  --accent: #2563eb;
+  --naver: #03c75a;
+  --must: #dc2626;
+  --want: #2563eb;
+  --maybe: #9ca3af;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard",
+    "Segoe UI", Roboto, sans-serif;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+
+#app {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 16px 14px 60px;
+}
+
+h1 { font-size: 1.5rem; margin: 0 0 2px; }
+h2 { font-size: 1.05rem; margin: 0 0 10px; }
+
+.muted { color: var(--muted); }
+.small { font-size: 0.82rem; }
+.muted.small { color: var(--muted); font-size: 0.82rem; }
+
+.hero { padding: 6px 2px 14px; }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 12px;
+}
+
+/* 항공편 */
+.flight { padding: 10px 0; border-top: 1px solid var(--line); }
+.flight:first-of-type { border-top: 0; padding-top: 0; }
+.flight-head { margin-bottom: 4px; }
+.flight-route { font-size: 1.05rem; font-weight: 600; margin: 2px 0 4px; }
+.flight-route .arrow { color: var(--muted); margin: 0 4px; }
+.flight-route .muted { font-weight: 400; font-size: 0.8rem; }
+
+/* 버튼 */
+.btn-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.btn {
+  display: inline-block;
+  padding: 7px 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: #eef2ff;
+  border: 1px solid #dbe4ff;
+  border-radius: 999px;
+  text-decoration: none;
+}
+.btn:active { transform: translateY(1px); }
+.btn-naver { color: #fff; background: var(--naver); border-color: var(--naver); }
+
+/* 필터 칩 */
+.plan-title { margin: 18px 2px 8px; }
+.filter { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+.chip {
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--muted);
+}
+.chip.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+/* 일자 */
+details.day summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+details.day summary::-webkit-details-marker { display: none; }
+.day-date { font-weight: 700; }
+.day-title { color: var(--muted); font-size: 0.9rem; }
+.anchors { margin: 10px 0; padding: 8px 10px; background: #fff7ed; border-radius: 8px; }
+.anchors a { color: var(--accent); }
+.note { margin: 8px 0; color: var(--muted); }
+
+.area { margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--line); }
+.area-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.area-name { font-weight: 700; }
+.area-head .btn { padding: 4px 10px; font-size: 0.78rem; }
+
+/* 장소 */
+.place {
+  display: flex;
+  gap: 10px;
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+}
+.place.visited { opacity: 0.5; }
+.place.visited .place-name { text-decoration: line-through; }
+.check {
+  flex: 0 0 26px;
+  width: 26px;
+  height: 26px;
+  margin-top: 2px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--accent);
+  font-size: 0.9rem;
+  line-height: 1;
+}
+.place-main { flex: 1; min-width: 0; }
+.place-name { font-weight: 600; }
+.place-main .btn { padding: 4px 10px; font-size: 0.78rem; }
+
+.pill {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 7px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  border-radius: 999px;
+  color: #fff;
+  vertical-align: middle;
+}
+.p-must { background: var(--must); }
+.p-want { background: var(--want); }
+.p-maybe { background: var(--maybe); }
