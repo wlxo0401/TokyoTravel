@@ -5,7 +5,7 @@ import {
   naverRoute,
   flightStatusUrl,
 } from "./maps.js";
-import { isVisited, toggleVisited } from "./state.js";
+import { isVisited, toggleVisited, isChecked, toggleChecked } from "./state.js";
 
 const CATEGORY = {
   food: "🍜",
@@ -170,13 +170,77 @@ function renderWeather(trip) {
   return d;
 }
 
+/* ---------- 유틸리티 : 지도 앱·웹 바로가기 ---------- */
+
+function renderTools(trip) {
+  if (!trip.tools || !trip.tools.length) return null;
+  const row = el("div", "btn-row tools");
+  trip.tools.forEach((t) => row.append(linkBtn(`${t.icon || "🔗"} ${t.label}`, t.url)));
+  return row;
+}
+
+/* ---------- 유틸리티 : 준비물 체크리스트 ---------- */
+
+function renderChecklist(trip) {
+  const groups = trip.checklist || [];
+  const wrap = el("div", "checklist");
+  const total = groups.reduce((n, g) => n + g.items.length, 0);
+  const done = () => groups.reduce((n, g) => n + g.items.filter((it) => isChecked(it.key)).length, 0);
+
+  const head = el("div", "checklist-head small");
+  const refreshHead = () => (head.textContent = `준비 완료 ${done()} / ${total}`);
+  refreshHead();
+  wrap.append(head);
+
+  groups.forEach((g) => {
+    const sec = el("section", "card");
+    sec.append(el("h3", "check-group", g.group));
+    g.items.forEach((it) => {
+      const row = el("div", "check-item");
+      const box = el("input");
+      box.type = "checkbox";
+      box.checked = isChecked(it.key);
+      const sync = () => row.classList.toggle("done", box.checked);
+      box.addEventListener("change", () => {
+        toggleChecked(it.key);
+        sync();
+        refreshHead();
+      });
+      sync();
+
+      const txt = el("span", "check-label", it.label);
+      txt.addEventListener("click", () => {
+        box.checked = !box.checked;
+        box.dispatchEvent(new Event("change"));
+      });
+
+      row.append(box, txt);
+      if (it.url) {
+        const a = el("a", "check-link", "열기 ↗");
+        a.href = it.url;
+        a.target = "_blank";
+        a.rel = "noopener";
+        row.append(a);
+      }
+      sec.append(row);
+    });
+    wrap.append(sec);
+  });
+
+  wrap.append(el("div", "small muted note", "체크 상태는 이 기기에만 저장됩니다 (일행과 공유되지 않음)."));
+  return wrap;
+}
+
 function renderUtility(trip) {
   const box = el("div");
   box.append(renderWeather(trip));
+  const tools = renderTools(trip);
+  if (tools) box.append(tools);
   box.append(
     makeTabs([
       { id: "flights", label: "항공편", render: () => renderFlights(trip) },
       { id: "stay", label: "숙소", render: () => renderStay(trip) },
+      { id: "checklist", label: "준비물", render: () => renderChecklist(trip) },
     ])
   );
   return box;

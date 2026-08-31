@@ -93,6 +93,46 @@ export const trip = {
     },
   ],
 
+  // 지도 앱·웹 바로가기 (특정 목적지 없이 앱만 실행). 유틸리티 상단에 버튼으로 표시.
+  tools: [
+    { label: "구글 지도", icon: "🗺️", url: "https://www.google.com/maps" },
+    { label: "애플 지도", icon: "🍎", url: "https://maps.apple.com/" },
+    { label: "Visit Japan Web", icon: "🇯🇵", url: "https://services.digital.go.jp/ko/visit-japan-web/" },
+  ],
+
+  // 준비물 체크리스트. 체크 상태는 기기(localStorage)에 저장 — 기기·브라우저마다 별도, 공유 안 됨.
+  // key는 라벨을 바꿔도 유지되도록 고정 문자열로 둔다.
+  checklist: [
+    {
+      group: "필수 확인",
+      items: [
+        { key: "passport", label: "여권 (유효기간 6개월 이상 남았는지)" },
+        { key: "vjw", label: "Visit Japan Web 등록·심사 QR 발급", url: "https://services.digital.go.jp/ko/visit-japan-web/" },
+        { key: "boarding", label: "항공권 / 모바일 탑승권 확인" },
+        { key: "stay", label: "숙소 예약·체크인 방법 저장 (오프라인 대비)" },
+        { key: "esim", label: "해외 데이터 (eSIM / 로밍)" },
+        { key: "money", label: "해외결제 카드 + 엔화 현금" },
+        { key: "insurance", label: "여행자 보험" },
+        { key: "offline-map", label: "구글맵 도쿄 오프라인 지도 다운로드" },
+      ],
+    },
+    {
+      group: "짐",
+      items: [
+        { key: "clothes", label: "여벌 옷 (일수 + 1)" },
+        { key: "shoes", label: "걷기 편한 신발" },
+        { key: "charger", label: "충전기 · 케이블 · 보조배터리" },
+        { key: "plug", label: "변환 플러그 (일본 A타입 · 100V)" },
+        { key: "toiletries", label: "세면도구 · 화장품 · 선크림" },
+        { key: "meds", label: "상비약 (두통 · 소화 · 밴드)" },
+        { key: "bags", label: "비닐봉투 몇 장 (빨래 · 젖은 옷)" },
+        { key: "ecobag", label: "에코백 (장보기 · 쇼핑)" },
+        { key: "umbrella", label: "접이 우산 / 우비" },
+        { key: "dryer", label: "드라이기 — 숙소에 있는지 먼저 확인" },
+      ],
+    },
+  ],
+
   // 일자별 계획: 시간표가 아니라 "지역 → 후보 장소" 구조. 순서는 느슨한 가이드.
   // priority: "must"(꼭) | "want"(가고싶음) | "maybe"(여유되면)
   // category: "food" | "cafe" | "shopping" | "sight" | "activity" | "transport"

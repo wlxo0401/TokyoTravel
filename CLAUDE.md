@@ -36,13 +36,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `js/maps.js` — 지도 링크 생성. **핵심 규칙: 한국 내 이동은 네이버(`nmap://` 딥링크 +
   웹 검색 폴백), 일본 내 이동은 구글 Maps URL.** 좌표가 없으면 "현재 위치"/이름 검색으로
   degrade 하도록 설계됨.
-- `js/state.js` — 장소 "가봤음" 체크를 `localStorage`에 저장(기기 로컬, 공유 안 됨).
+- `js/state.js` — 체크 상태를 `localStorage`에 저장(기기·브라우저별, 공유 안 됨).
+  범용 `store(key)` 팩토리 위에 두 종류: `visited`(가 본 장소, `tokyo-trip:visited`),
+  `checklist`(준비물, `tokyo-trip:checklist`). `is/toggle Visited`, `is/toggle Checked` export.
 - `js/render.js` — `trip` 객체를 DOM으로 그린다. 최상위 탭 **유틸리티 / 일정**
-  (`makeTabs`, variant "main"). 유틸리티 = 날씨 드롭다운(`trip.links`) + 하위 탭
-  (항공편·숙소). 일정 = 우선순위 필터 칩 + 날짜별 탭(`renderDayBody`). 각 일자 본문에
-  해당 날짜의 항공편·체크인/아웃 "고정 일정"을 자동으로 끼워 넣는다(anchors). 나머지는
-  `지역 → 후보 장소(priority: must/want/maybe)` 계층. 필터 상태는 모듈 변수
-  `planFilter`로 유지되어 날짜 탭을 바꿔도 `applyFilter`가 다시 적용된다.
+  (`makeTabs`, variant "main").
+  - 유틸리티 = 날씨 드롭다운(`trip.links`) + 지도 앱 바로가기 버튼(`trip.tools`)
+    + 하위 탭 (항공편 · 숙소 · 준비물). 준비물은 `trip.checklist`(그룹→아이템, 아이템
+    `key`로 체크 저장, 선택적 `url`), 상단에 "준비 완료 n / 전체" 카운터.
+  - 일정 = 우선순위 필터 칩 + 날짜별 탭(`renderDayBody`). 각 일자 본문에 해당 날짜의
+    항공편·체크인/아웃 "고정 일정"을 자동으로 끼워 넣는다(anchors). 나머지는
+    `지역 → 후보 장소(priority: must/want/maybe)` 계층. 필터 상태는 모듈 변수
+    `planFilter`로 유지되어 날짜 탭을 바꿔도 `applyFilter`가 다시 적용된다.
 - `js/app.js` — 진입점. 렌더 호출 + 네이버 딥링크 실패 시 웹 폴백 핸들러.
 
 ## README 다국어
@@ -56,3 +61,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 `trip.days[].areas[].places[]` 3단 계층이 "유동적 계획"의 핵심이다. 시간표가 아니라
 느슨한 순서 + 후보 목록. 고정 일정(비행기/체크인)은 데이터 중복 없이 `flights`와
 `accommodation`에서 파생시켜 표시한다.
+
+`trip`의 최상위 키: `title`·`subtitle`·`dates`, `home`, `flights[]`, `accommodation`,
+`links[]`(날씨), `tools[]`(지도 앱 바로가기), `checklist[]`(준비물), `days[]`.
