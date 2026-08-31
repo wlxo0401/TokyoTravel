@@ -50,11 +50,37 @@ function linkBtn(text, href, { naver = false, fallback = "" } = {}) {
   return a;
 }
 
-/* ---------- 항공편 ---------- */
+/* ---------- 탭 ---------- */
+
+// items: [{ id, label(HTML), render: () => Node }]
+function makeTabs(items, variant = "") {
+  const wrap = el("div", "tabs");
+  const nav = el("div", "tabnav" + (variant ? " tabnav-" + variant : ""));
+  const panel = el("div", "tabpanel");
+
+  const select = (id) => {
+    nav.querySelectorAll(".tab").forEach((b) => b.classList.toggle("on", b.dataset.id === id));
+    panel.innerHTML = "";
+    const item = items.find((i) => i.id === id);
+    if (item) panel.append(item.render());
+  };
+
+  items.forEach((it) => {
+    const b = el("button", "tab", it.label);
+    b.dataset.id = it.id;
+    b.addEventListener("click", () => select(it.id));
+    nav.append(b);
+  });
+
+  wrap.append(nav, panel);
+  select((items[0] || {}).id);
+  return wrap;
+}
+
+/* ---------- 유틸리티 : 항공편 ---------- */
 
 function renderFlights(trip) {
   const sec = el("section", "card");
-  sec.id = "flights";
   sec.append(el("h2", null, "✈️ 항공편"));
 
   trip.flights.forEach((f) => {
@@ -74,7 +100,6 @@ function renderFlights(trip) {
 
     const btns = el("div", "btn-row");
     if (f.kind === "outbound") {
-      // 한국 → 인천공항: 네이버 길찾기
       btns.append(
         linkBtn("공항 길찾기 (네이버)", naverRoute({ from: trip.home.coords, to: f.depart.coords, toName: f.depart.name }), {
           naver: true,
@@ -83,7 +108,6 @@ function renderFlights(trip) {
       );
       btns.append(linkBtn("공항 지도 (네이버)", naverSearch(f.depart.name)));
     } else {
-      // 숙소 → 나리타공항: 구글 길찾기
       btns.append(
         linkBtn(
           "공항 길찾기 (구글)",
@@ -95,7 +119,6 @@ function renderFlights(trip) {
         )
       );
       btns.append(linkBtn("공항 지도 (구글)", googlePlace(f.depart.coords, f.depart.name)));
-      // 도착 후 한국 이동
       btns.append(
         linkBtn("집 가는 길 (네이버)", naverRoute({ from: f.arrive.coords, to: trip.home.coords, toName: trip.home.name }), {
           naver: true,
@@ -111,12 +134,11 @@ function renderFlights(trip) {
   return sec;
 }
 
-/* ---------- 숙소 ---------- */
+/* ---------- 유틸리티 : 숙소 ---------- */
 
 function renderStay(trip) {
   const a = trip.accommodation;
   const sec = el("section", "card");
-  sec.id = "stay";
   sec.append(el("h2", null, "🏠 숙소"));
   sec.append(el("div", null, `<strong>${a.name}</strong> · ${a.area}`));
   sec.append(el("div", "muted small", a.address));
@@ -131,27 +153,63 @@ function renderStay(trip) {
 
   const btns = el("div", "btn-row");
   btns.append(linkBtn("숙소 지도 (구글)", googlePlace(a.coords, a.address)));
-  btns.append(
-    linkBtn("숙소 길찾기 (구글)", googleDirections({ destination: a.coords || a.address, mode: "transit" }))
-  );
+  btns.append(linkBtn("숙소 길찾기 (구글)", googleDirections({ destination: a.coords || a.address, mode: "transit" })));
   if (a.url && !a.url.startsWith("TODO")) btns.append(linkBtn("예약 확인", a.url));
   sec.append(btns);
   return sec;
 }
 
-/* ---------- 참고 링크 ---------- */
+/* ---------- 유틸리티 : 날씨 드롭다운 ---------- */
 
-function renderLinks(trip) {
-  if (!trip.links || !trip.links.length) return null;
-  const sec = el("section", "card");
-  sec.append(el("h2", null, "🔗 참고 링크"));
-  const row = el("div", "btn-row");
-  trip.links.forEach((l) => row.append(linkBtn(`${l.icon || "🔗"} ${l.label}`, l.url)));
-  sec.append(row);
-  return sec;
+function renderWeather(trip) {
+  const d = el("details", "dropdown");
+  d.append(el("summary", null, "🌤️ 날씨"));
+  const menu = el("div", "dropdown-menu");
+  (trip.links || []).forEach((l) => menu.append(linkBtn(`${l.icon || "🔗"} ${l.label}`, l.url)));
+  d.append(menu);
+  return d;
 }
 
-/* ---------- 일자별 계획 ---------- */
+function renderUtility(trip) {
+  const box = el("div");
+  box.append(renderWeather(trip));
+  box.append(
+    makeTabs([
+      { id: "flights", label: "항공편", render: () => renderFlights(trip) },
+      { id: "stay", label: "숙소", render: () => renderStay(trip) },
+    ])
+  );
+  return box;
+}
+
+/* ---------- 일정 ---------- */
+
+let planFilter = "all";
+
+function applyFilter(scope) {
+  scope.querySelectorAll(".place").forEach((p) => {
+    p.hidden = planFilter !== "all" && p.dataset.priority !== planFilter;
+  });
+}
+
+function renderFilter(scope) {
+  const bar = el("div", "filter");
+  [
+    ["all", "전체"],
+    ["must", "꼭"],
+    ["want", "가고싶음"],
+    ["maybe", "여유되면"],
+  ].forEach(([val, label]) => {
+    const b = el("button", "chip" + (planFilter === val ? " on" : ""), label);
+    b.addEventListener("click", () => {
+      planFilter = val;
+      bar.querySelectorAll(".chip").forEach((c) => c.classList.toggle("on", c === b));
+      applyFilter(scope);
+    });
+    bar.append(b);
+  });
+  return bar;
+}
 
 function placeRow(day, area, place) {
   const row = el("div", "place");
@@ -169,19 +227,13 @@ function placeRow(day, area, place) {
   const p = PRIORITY[place.priority] || PRIORITY.maybe;
   const main = el("div", "place-main");
   main.append(
-    el(
-      "div",
-      "place-name",
-      `${CATEGORY[place.category] || "📍"} ${place.name} <span class="pill ${p.cls}">${p.label}</span>`
-    )
+    el("div", "place-name", `${CATEGORY[place.category] || "📍"} ${place.name} <span class="pill ${p.cls}">${p.label}</span>`)
   );
   if (place.note) main.append(el("div", "muted small", place.note));
 
   const btns = el("div", "btn-row");
   btns.append(linkBtn("지도", googlePlace(place.coords, place.name)));
-  btns.append(
-    linkBtn("길찾기", googleDirections({ destination: place.coords || place.name, mode: "walking" }))
-  );
+  btns.append(linkBtn("길찾기", googleDirections({ destination: place.coords || place.name, mode: "walking" })));
   main.append(btns);
 
   row.dataset.priority = place.priority;
@@ -189,28 +241,23 @@ function placeRow(day, area, place) {
   return row;
 }
 
-function renderDay(trip, day, open) {
-  const d = el("details", "card day");
-  if (open) d.open = true;
-  const s = el("summary");
-  s.innerHTML = `<span class="day-date">${fmtDate(day.date)}</span> <span class="day-title">${day.title}</span>`;
-  d.append(s);
+function renderDayBody(trip, day) {
+  const wrap = el("div", "day-body");
 
-  // 고정 일정(항공/체크인·아웃) 자동 표시
   const anchors = [];
   trip.flights.forEach((f) => {
     if (f.date === day.date) {
       const t = f.kind === "outbound" ? `${f.depart.airport} 출발` : `${f.arrive.airport} 도착`;
-      anchors.push(`✈️ ${fmtTime(f.kind === "outbound" ? f.depart.time : f.arrive.time)} ${t} · <a href="#flights">항공편</a>`);
+      anchors.push(`✈️ ${fmtTime(f.kind === "outbound" ? f.depart.time : f.arrive.time)} ${t}`);
     }
   });
   if (trip.accommodation.checkIn.startsWith(day.date))
-    anchors.push(`🔑 ${fmtTime(trip.accommodation.checkIn)} 체크인 · <a href="#stay">숙소</a>`);
+    anchors.push(`🔑 ${fmtTime(trip.accommodation.checkIn)} 체크인`);
   if (trip.accommodation.checkOut.startsWith(day.date))
-    anchors.push(`🧳 ${fmtTime(trip.accommodation.checkOut)} 체크아웃 · <a href="#stay">숙소</a>`);
-  if (anchors.length) d.append(el("div", "anchors small", anchors.join("<br>")));
+    anchors.push(`🧳 ${fmtTime(trip.accommodation.checkOut)} 체크아웃`);
+  if (anchors.length) wrap.append(el("div", "anchors small", anchors.join("<br>")));
 
-  if (day.note) d.append(el("div", "note small", day.note));
+  if (day.note) wrap.append(el("div", "note small", day.note));
 
   day.areas.forEach((area) => {
     const box = el("div", "area");
@@ -220,36 +267,34 @@ function renderDay(trip, day, open) {
     box.append(head);
     if (area.note) box.append(el("div", "muted small", area.note));
     area.places.forEach((pl) => box.append(placeRow(day, area, pl)));
-    d.append(box);
+    wrap.append(box);
   });
 
-  if (!day.areas.length) d.append(el("div", "muted small", "계획 미정 — 자유롭게 채워보세요."));
-  return d;
+  if (!day.areas.length) wrap.append(el("div", "muted small", "계획 미정 — 자유롭게 채워보세요."));
+
+  applyFilter(wrap);
+  return wrap;
 }
 
-/* ---------- 우선순위 필터 ---------- */
-
-function renderFilter(root) {
-  const bar = el("div", "filter");
-  const opts = [
-    ["all", "전체"],
-    ["must", "꼭"],
-    ["want", "가고싶음"],
-    ["maybe", "여유되면"],
-  ];
-  opts.forEach(([val, label], i) => {
-    const b = el("button", "chip" + (i === 0 ? " on" : ""), label);
-    b.addEventListener("click", () => {
-      bar.querySelectorAll(".chip").forEach((c) => c.classList.remove("on"));
-      b.classList.add("on");
-      root.querySelectorAll(".place").forEach((p) => {
-        p.hidden = val !== "all" && p.dataset.priority !== val;
-      });
-    });
-    bar.append(b);
-  });
-  return bar;
+function renderPlan(trip) {
+  const box = el("div");
+  box.append(renderFilter(box));
+  box.append(
+    makeTabs(
+      trip.days.map((day, i) => {
+        const d = new Date(day.date + "T00:00");
+        return {
+          id: day.date,
+          label: `${i + 1}일차<small>${d.getMonth() + 1}/${d.getDate()}</small>`,
+          render: () => renderDayBody(trip, day),
+        };
+      })
+    )
+  );
+  return box;
 }
+
+/* ---------- 진입 ---------- */
 
 export function renderTrip(trip, root) {
   root.innerHTML = "";
@@ -258,18 +303,13 @@ export function renderTrip(trip, root) {
   header.append(el("div", "muted", trip.subtitle));
   root.append(header);
 
-  root.append(renderFlights(trip));
-  root.append(renderStay(trip));
-  const links = renderLinks(trip);
-  if (links) root.append(links);
-
-  const plan = el("section", null, "");
-  plan.append(el("h2", "plan-title", "🗓️ 일정"));
-  plan.append(renderFilter(plan));
-  const today = new Date().toISOString().slice(0, 10);
-  trip.days.forEach((day, i) => {
-    const open = day.date === today || (today < trip.days[0].date && i === 0);
-    plan.append(renderDay(trip, day, open));
-  });
-  root.append(plan);
+  root.append(
+    makeTabs(
+      [
+        { id: "util", label: "유틸리티", render: () => renderUtility(trip) },
+        { id: "plan", label: "일정", render: () => renderPlan(trip) },
+      ],
+      "main"
+    )
+  );
 }

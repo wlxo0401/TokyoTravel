@@ -72,35 +72,99 @@ h2 { font-size: 1.05rem; margin: 0 0 10px; }
 .btn:active { transform: translateY(1px); }
 .btn-naver { color: #fff; background: var(--naver); border-color: var(--naver); }
 
+/* 탭 */
+.tabnav {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 4px;
+  margin-bottom: 14px;
+  scrollbar-width: none;
+}
+.tabnav::-webkit-scrollbar { display: none; }
+.tab {
+  flex: 0 0 auto;
+  padding: 8px 15px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.15;
+  white-space: nowrap;
+  text-align: center;
+  cursor: pointer;
+}
+.tab small { display: block; font-size: 0.68rem; font-weight: 400; opacity: 0.85; }
+.tab.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+.tabnav-main {
+  gap: 4px;
+  padding: 4px;
+  background: #e9ebef;
+  border-radius: 12px;
+  overflow: visible;
+}
+.tabnav-main .tab {
+  flex: 1 1 0;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  padding: 9px 12px;
+}
+.tabnav-main .tab.on {
+  background: #fff;
+  color: var(--ink);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+/* 날씨 드롭다운 */
+.dropdown {
+  margin-bottom: 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--card);
+}
+.dropdown > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 12px 14px;
+  font-weight: 700;
+}
+.dropdown > summary::-webkit-details-marker { display: none; }
+.dropdown > summary::after { content: "▾"; float: right; color: var(--muted); }
+.dropdown[open] > summary::after { content: "▴"; }
+.dropdown-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 2px 14px 14px;
+}
+
 /* 필터 칩 */
-.plan-title { margin: 18px 2px 8px; }
-.filter { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+.filter { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
 .chip {
   padding: 6px 14px;
+  font: inherit;
   font-size: 0.85rem;
   border: 1px solid var(--line);
   border-radius: 999px;
   background: #fff;
   color: var(--muted);
+  cursor: pointer;
 }
 .chip.on { background: var(--ink); color: #fff; border-color: var(--ink); }
 
-/* 일자 */
-details.day summary {
-  list-style: none;
-  cursor: pointer;
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-}
-details.day summary::-webkit-details-marker { display: none; }
-.day-date { font-weight: 700; }
-.day-title { color: var(--muted); font-size: 0.9rem; }
-.anchors { margin: 10px 0; padding: 8px 10px; background: #fff7ed; border-radius: 8px; }
+/* 일자 본문 */
+.anchors { margin: 4px 0 10px; padding: 8px 10px; background: #fff7ed; border-radius: 8px; }
 .anchors a { color: var(--accent); }
 .note { margin: 8px 0; color: var(--muted); }
 
 .area { margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--line); }
+.day-body > .area:first-child { margin-top: 4px; border-top: 0; }
 .area-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .area-name { font-weight: 700; }
 .area-head .btn { padding: 4px 10px; font-size: 0.78rem; }

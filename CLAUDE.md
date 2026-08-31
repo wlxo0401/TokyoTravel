@@ -28,10 +28,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   웹 검색 폴백), 일본 내 이동은 구글 Maps URL.** 좌표가 없으면 "현재 위치"/이름 검색으로
   degrade 하도록 설계됨.
 - `js/state.js` — 장소 "가봤음" 체크를 `localStorage`에 저장(기기 로컬, 공유 안 됨).
-- `js/render.js` — `trip` 객체를 DOM으로 그린다. 일자 카드에는 해당 날짜의 항공편·
-  체크인/아웃 "고정 일정"을 자동으로 끼워 넣고(`renderDay`의 anchors), 나머지는
-  `지역 → 후보 장소(priority: must/want/maybe)` 계층으로 유동적으로 표시. 우선순위
-  필터 칩이 `.place[data-priority]`를 토글.
+- `js/render.js` — `trip` 객체를 DOM으로 그린다. 최상위 탭 **유틸리티 / 일정**
+  (`makeTabs`, variant "main"). 유틸리티 = 날씨 드롭다운(`trip.links`) + 하위 탭
+  (항공편·숙소). 일정 = 우선순위 필터 칩 + 날짜별 탭(`renderDayBody`). 각 일자 본문에
+  해당 날짜의 항공편·체크인/아웃 "고정 일정"을 자동으로 끼워 넣는다(anchors). 나머지는
+  `지역 → 후보 장소(priority: must/want/maybe)` 계층. 필터 상태는 모듈 변수
+  `planFilter`로 유지되어 날짜 탭을 바꿔도 `applyFilter`가 다시 적용된다.
 - `js/app.js` — 진입점. 렌더 호출 + 네이버 딥링크 실패 시 웹 폴백 핸들러.
 
 ## 데이터 모델 요약
