@@ -63,6 +63,9 @@ Le plus rapide est de **confier ça à l'IA**. Ouvrez tout le dépôt et dites
 « adapte ce projet pour mon voyage à ___ » : elle passera en revue `data/trip.js` et, au besoin,
 la mise en page, la structure des onglets et les styles.
 
+Les règles de travail de ce dépôt pour les assistants IA sont dans
+[`CLAUDE.md`](CLAUDE.md) — Claude Code le lit automatiquement ; indiquez ce fichier aux autres outils.
+
 ### 3. Déployer (GitHub Pages)
 
 1. Dépôt → **Settings → Pages**

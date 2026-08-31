@@ -63,6 +63,9 @@ Lo más rápido es **dejárselo a la IA**. Abre todo el repositorio y di
 «adapta este proyecto para mi viaje a ___»: recorrerá `data/trip.js` y, si hace falta,
 también la maquetación, la estructura de pestañas y los estilos.
 
+Las reglas de trabajo de este repositorio para asistentes de IA están en
+[`CLAUDE.md`](CLAUDE.md): Claude Code lo lee automáticamente; indica ese archivo a otras herramientas.
+
 ### 3. Desplegar (GitHub Pages)
 
 1. Repositorio → **Settings → Pages**

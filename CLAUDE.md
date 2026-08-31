@@ -1,6 +1,7 @@
 # CLAUDE.md
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+다른 AI 도구를 쓰는 경우에도 이 파일을 프로젝트 작업 규칙으로 지정해서 사용한다.
 
 ## 작업 규칙
 

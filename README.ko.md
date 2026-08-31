@@ -63,6 +63,9 @@ python3 -m http.server 8000
 "이 프로젝트를 내 ○○ 여행에 맞게 고쳐줘"라고 하면, 아래 `data/trip.js`부터
 필요하면 화면·탭 구성·스타일까지 함께 손봐 줍니다.
 
+이 저장소의 AI 작업 규칙은 [`CLAUDE.md`](CLAUDE.md)에 있습니다 — Claude Code는 자동으로
+읽고, 다른 도구는 이 파일을 규칙으로 지정해서 쓰세요.
+
 ### 3. 배포 (GitHub Pages)
 
 1. GitHub 저장소 → **Settings → Pages**

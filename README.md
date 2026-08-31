@@ -63,6 +63,9 @@ The fastest path is to **hand it to AI**. Open the whole repo and say
 "adapt this project for my trip to ___" — it'll work through `data/trip.js` and, if needed,
 the layout, tab structure, and styling too.
 
+This repo's working rules for AI assistants live in [`CLAUDE.md`](CLAUDE.md) — Claude Code
+reads it automatically; point other tools at it.
+
 ### 3. Deploy (GitHub Pages)
 
 1. Repo → **Settings → Pages**

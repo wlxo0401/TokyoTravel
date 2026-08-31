@@ -63,6 +63,9 @@ python3 -m http.server 8000
 「把这个项目改成我去 ○○ 的旅行」——它会从 `data/trip.js` 开始，
 必要时连同布局、标签结构和样式一起调整。
 
+本仓库面向 AI 的工作规则在 [`CLAUDE.md`](CLAUDE.md) 中 —— Claude Code 会自动读取；
+其他工具请指向这个文件作为规则。
+
 ### 3. 部署（GitHub Pages）
 
 1. 仓库 → **Settings → Pages**

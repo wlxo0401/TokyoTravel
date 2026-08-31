@@ -63,6 +63,9 @@ python3 -m http.server 8000
 「把這個專案改成我去 ○○ 的旅行」——它會從 `data/trip.js` 開始，
 必要時連同版面、分頁結構和樣式一起調整。
 
+本儲存庫給 AI 的工作規則放在 [`CLAUDE.md`](CLAUDE.md) —— Claude Code 會自動讀取；
+其他工具請指向這個檔案作為規則。
+
 ### 3. 部署（GitHub Pages）
 
 1. 儲存庫 → **Settings → Pages**
