@@ -53,48 +53,6 @@ python3 -m http.server 8000
 "이 프로젝트를 내 ○○ 여행에 맞게 고쳐줘"라고 하면, 아래 `data/trip.js`부터
 필요하면 화면·탭 구성·스타일까지 함께 손봐 줍니다.
 
-직접 한다면 대개는 [`data/trip.js`](data/trip.js) 한 파일이면 충분합니다.
-`TODO`로 표시된 값을 실제 정보로 채우세요.
-
-| 항목 | 위치 | 메모 |
-| --- | --- | --- |
-| 제목·날짜 | `title`, `subtitle`, `dates` | |
-| 출발지 | `home` | 좌표를 넣으면 네이버 길찾기가 "집 → 공항"으로 정확해짐 (없으면 현재 위치 기준) |
-| 항공편 | `flights[]` | `kind: "outbound" \| "inbound"`, 터미널·시간·예약번호 |
-| 숙소 | `accommodation` | `coords`를 넣으면 지도 버튼이 정확해짐 |
-| 참고 링크 | `links[]` | 날씨·환율 등. "날씨" 드롭다운에 표시 |
-| 일정 | `days[].areas[].places[]` | 아래 참고 |
-
-지도 규칙(한국=네이버 / 일본=구글)이 안 맞으면 [`js/maps.js`](js/maps.js)에서 바꾸세요.
-
-#### 일정 데이터 모델
-
-시간표가 아니라 **`날짜 → 지역 → 후보 장소`** 3단 계층입니다.
-
-```js
-days: [
-  {
-    date: "2026-09-10",
-    title: "1일차 · 도착",
-    note: "무리하지 말고 숙소 주변만",
-    areas: [
-      {
-        name: "신주쿠",
-        coords: { lat: 35.6896, lng: 139.7006 },
-        places: [
-          { name: "오모이데 요코초", category: "food", priority: "want",
-            coords: { lat: 35.6935, lng: 139.6996 }, note: "야키토리 골목" },
-        ],
-      },
-    ],
-  },
-]
-```
-
-- `priority`: `must`(꼭) · `want`(가고싶음) · `maybe`(여유되면) — 일정 화면 상단 필터로 걸러 봄
-- `category`: `food` · `cafe` · `shopping` · `sight` · `activity` · `transport` (아이콘 표시용)
-- `coords`가 없으면 이름 검색으로 대체되니, 우선 이름만 적어두고 나중에 채워도 됩니다
-
 ### 3. 배포 (GitHub Pages)
 
 1. GitHub 저장소 → **Settings → Pages**
@@ -103,21 +61,3 @@ days: [
 4. 일행에게 이 링크를 공유. 이후 계획을 고치면 푸시만 하면 자동 반영됩니다.
 
 `.nojekyll` 파일이 Jekyll 처리를 생략시킵니다. 자산 경로는 모두 상대경로라 하위 경로 배포에서도 동작합니다.
-
-## 지도 규칙
-
-- 한국 내 이동(집 → 인천공항 등) → **네이버 지도** (앱 딥링크, 실패 시 웹 검색으로 폴백)
-- 일본 내 이동(숙소 → 공항, 각 장소) → **구글 지도** (Maps URL)
-
-## 구조
-
-```
-index.html
-css/style.css        라이트 모드 고정, 모바일 우선
-data/trip.js          ← 여행 정보 전부 (여기만 고치면 됨)
-js/
-  app.js              진입점 + 네이버 딥링크 폴백 핸들러
-  render.js           trip 객체 → 탭 UI (유틸리티 / 일정)
-  maps.js             지도 링크 생성 (네이버 / 구글)
-  state.js            "가봤음" 체크 localStorage 저장
-```
