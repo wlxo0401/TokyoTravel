@@ -139,6 +139,18 @@ function renderStay(trip) {
   return sec;
 }
 
+/* ---------- 참고 링크 ---------- */
+
+function renderLinks(trip) {
+  if (!trip.links || !trip.links.length) return null;
+  const sec = el("section", "card");
+  sec.append(el("h2", null, "🔗 참고 링크"));
+  const row = el("div", "btn-row");
+  trip.links.forEach((l) => row.append(linkBtn(`${l.icon || "🔗"} ${l.label}`, l.url)));
+  sec.append(row);
+  return sec;
+}
+
 /* ---------- 일자별 계획 ---------- */
 
 function placeRow(day, area, place) {
@@ -248,6 +260,8 @@ export function renderTrip(trip, root) {
 
   root.append(renderFlights(trip));
   root.append(renderStay(trip));
+  const links = renderLinks(trip);
+  if (links) root.append(links);
 
   const plan = el("section", null, "");
   plan.append(el("h2", "plan-title", "🗓️ 일정"));

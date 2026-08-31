@@ -71,6 +71,25 @@ export const trip = {
     notes: "체크인 방법 · 도어락 · 와이파이 등 메모",
   },
 
+  // 참고 링크 (날씨·기상 등). icon은 이모지.
+  links: [
+    {
+      label: "기상 레이더 (JMA 나우캐스트)",
+      icon: "🌧️",
+      url: "https://www.jma.go.jp/bosai/multi_nowc/?lang=kr#zoom:10/lat:35.691322/lon:139.579926/colordepth:undefined/elements:hrpns",
+    },
+    {
+      label: "날씨 예보 (tenki.jp · 도쿄)",
+      icon: "☀️",
+      url: "https://tenki.jp/forecast/3/16/",
+    },
+    {
+      label: "오늘의 옷차림 지수 (tenki.jp · 도쿄)",
+      icon: "👕",
+      url: "https://tenki.jp/indexes/dress/3/16/",
+    },
+  ],
+
   // 일자별 계획: 시간표가 아니라 "지역 → 후보 장소" 구조. 순서는 느슨한 가이드.
   // priority: "must"(꼭) | "want"(가고싶음) | "maybe"(여유되면)
   // category: "food" | "cafe" | "shopping" | "sight" | "activity" | "transport"
