@@ -36,6 +36,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   `planFilter`로 유지되어 날짜 탭을 바꿔도 `applyFilter`가 다시 적용된다.
 - `js/app.js` — 진입점. 렌더 호출 + 네이버 딥링크 실패 시 웹 폴백 핸들러.
 
+## README 다국어
+
+`README.md`(영어)가 정본이고 `README.<lang>.md`(ko/ja/zh-CN/zh-TW/es/fr)가 번역본이다.
+각 파일 상단에 `<p align="center">` 언어 선택 줄이 있고 현재 언어만 `<b>`, 나머지는
+링크. README 내용을 고치면 7개 파일을 모두 같이 맞춰야 한다(영어 먼저 수정 후 번역).
+
 ## 데이터 모델 요약
 
 `trip.days[].areas[].places[]` 3단 계층이 "유동적 계획"의 핵심이다. 시간표가 아니라

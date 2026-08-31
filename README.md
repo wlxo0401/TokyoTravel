@@ -1,41 +1,51 @@
-# 여행 계획 템플릿
+# Trip Planner Template
 
-빌드 도구 없이 GitHub Pages로 배포하는 정적 여행 계획 웹앱.
-**이걸 기본 틀로 삼아, AI와 함께 나만의 여행 계획 템플릿을 만들어 가세요.**
+<p align="center">
+  <b>English</b> ·
+  <a href="README.ko.md">한국어</a> ·
+  <a href="README.ja.md">日本語</a> ·
+  <a href="README.zh-CN.md">简体中文</a> ·
+  <a href="README.zh-TW.md">繁體中文</a> ·
+  <a href="README.es.md">Español</a> ·
+  <a href="README.fr.md">Français</a>
+</p>
 
-> 이 저장소는 하나의 **예시**입니다. 데이터는 2026년 9월 도쿄 여행용으로 채워져 있지만,
-> 정해진 건 없습니다. 마음에 들면 그대로 쓰고, 아니면 목적지·구조·디자인·기능까지
-> 기호에 맞게 뜯어고쳐 더 나은 템플릿을 만들어도 됩니다. 우리는 출발점이 되어줄 뿐입니다.
+A static travel-planning web app you deploy on GitHub Pages — no build tools.
+**Use it as a starting point and shape your own trip-planning template with AI.**
 
-## 왜 만들었나
+> This repo is just an **example**. The data is filled in for a September 2026 Tokyo trip,
+> but nothing is fixed. Use it as-is if you like it, or rework the destination, structure,
+> design, and features to taste and build a better template. We're only a starting point.
 
-여행 계획은 **가기 전에는 열심히 짜지만, 여행 중에는 고치지 않는다**는 데서 출발했습니다.
-여행은 100% 계획대로 되지 않고 변수가 생기지만, 그렇다고 여행하면서 계획서를 다시 쓰지는 않죠.
-그래서 이 앱은 두 가지 국면을 나눠서 봅니다.
+## Why this exists
 
-- **여행 전 — 계획**: AI와 함께 일정을 짜고 필요한 정보(장소·링크·후보)를 미리 담아둡니다.
-  GitHub에 푸시하면 바로 배포되고, 일행에게 링크만 공유하면 끝.
-- **여행 중 — 참고(읽기 전용)**: 이때는 계획을 고치지 않습니다. 미리 준비해 둔 정보를
-  **그 자리에서 확인하고 빠르게 결정**하는 용도입니다.
-  - 날짜 탭으로 오늘 동선을 한눈에
-  - 지역별 후보 장소와 우선순위("꼭 / 가고싶음 / 여유되면")만 보고 현장에서 선택 (시간표 아님)
-  - 버튼 하나로 지도 길찾기 (한국 구간은 네이버, 일본 구간은 구글)
-  - 가 본 곳은 체크 (기기 로컬에 저장)
+It starts from one observation: **you plan hard before a trip, but you don't rewrite the plan during it.**
+Trips never go 100% to plan and things change — but you don't sit down and redo the itinerary mid-trip.
+So this app treats planning as two separate phases.
 
-계획은 강제하지 않습니다. 정해진 시간표 대신 "느슨한 순서 + 후보 목록"으로
-두고, 현장에서 그때그때 고르면 됩니다. 그것이 여행입니다.
+- **Before the trip — planning**: build the itinerary with AI and load in what you'll need
+  (places, links, candidates). Push to GitHub and it's live; share the link with your travel companions.
+- **During the trip — reference (read-only)**: you don't edit the plan here. It's for
+  **checking what you prepared and deciding fast on the spot.**
+  - See today's route at a glance with date tabs
+  - Browse candidate places per area with a priority only ("must / want / if there's time") — not a timetable
+  - One tap for map directions (Naver for legs in Korea, Google for legs in Japan)
+  - Check off places you've been to (saved locally on your device)
 
-## 특징
+The plan isn't enforced. Instead of a fixed timetable, keep a loose order and a shortlist,
+and pick as you go. That's what traveling is.
 
-- 프레임워크·번들러·백엔드 없음. 순수 HTML/CSS/ES 모듈.
-- 데이터와 화면이 분리 — 여행 정보는 전부 `data/trip.js` 한 파일.
-- 라이트 모드 고정, 모바일 우선 (PC에서도 사용 가능).
+## Highlights
+
+- No framework, bundler, or backend. Plain HTML/CSS/ES modules.
+- Data and UI are separate — all trip info lives in a single `data/trip.js`.
+- Light mode only, mobile-first (works on desktop too).
 
 ---
 
-## 시작하기
+## Getting started
 
-### 1. 클론 & 로컬 실행
+### 1. Clone & run locally
 
 ```bash
 git clone https://github.com/<your-name>/<your-repo>.git
@@ -44,20 +54,20 @@ python3 -m http.server 8000
 # http://localhost:8000
 ```
 
-`index.html`을 브라우저로 직접 열면 ES 모듈 로딩이 막히므로 꼭 로컬 서버로 띄우세요.
-(`python3` 대신 `npx serve` 등 아무 정적 서버나 가능)
+Opening `index.html` directly in the browser breaks ES module loading, so always serve it
+from a local server. (Any static server works — `npx serve`, etc., instead of `python3`.)
 
-### 2. 내 여행으로 바꾸기
+### 2. Make it your trip
 
-가장 빠른 길은 **AI에게 맡기는 것**입니다. 저장소를 통째로 열어놓고
-"이 프로젝트를 내 ○○ 여행에 맞게 고쳐줘"라고 하면, 아래 `data/trip.js`부터
-필요하면 화면·탭 구성·스타일까지 함께 손봐 줍니다.
+The fastest path is to **hand it to AI**. Open the whole repo and say
+"adapt this project for my trip to ___" — it'll work through `data/trip.js` and, if needed,
+the layout, tab structure, and styling too.
 
-### 3. 배포 (GitHub Pages)
+### 3. Deploy (GitHub Pages)
 
-1. GitHub 저장소 → **Settings → Pages**
+1. Repo → **Settings → Pages**
 2. **Source: Deploy from a branch**, Branch: `main` / `/(root)`
-3. 몇 분 뒤 `https://<your-name>.github.io/<your-repo>/` 에서 접속
-4. 일행에게 이 링크를 공유. 이후 계획을 고치면 푸시만 하면 자동 반영됩니다.
+3. A few minutes later it's live at `https://<your-name>.github.io/<your-repo>/`
+4. Share that link with your companions. After that, just push your changes and they go live automatically.
 
-`.nojekyll` 파일이 Jekyll 처리를 생략시킵니다. 자산 경로는 모두 상대경로라 하위 경로 배포에서도 동작합니다.
+The `.nojekyll` file skips Jekyll processing. All asset paths are relative, so it works under a sub-path deploy.
