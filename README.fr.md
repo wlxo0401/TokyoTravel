@@ -71,3 +71,13 @@ la mise en page, la structure des onglets et les styles.
 4. Partagez ce lien avec vos compagnons. Ensuite, poussez simplement vos modifications et elles sont publiées automatiquement.
 
 Le fichier `.nojekyll` saute le traitement Jekyll. Tous les chemins d'actifs sont relatifs, donc ça fonctionne pour un déploiement en sous-chemin.
+
+## Précaution
+
+> [!WARNING]
+> **N'inscrivez pas d'informations sensibles directement.** `data/trip.js` est commité
+> dans le dépôt et publié publiquement sur GitHub Pages, et l'historique git le conserve
+> même après suppression. N'y mettez pas les numéros de réservation, de passeport ou de
+> pièce d'identité, les numéros de téléphone, l'adresse complète du domicile ni les codes
+> d'accès : partagez cela avec vos compagnons via un canal privé. Les noms de lieux, les
+> quartiers et les coordonnées de carte ne posent pas de problème.

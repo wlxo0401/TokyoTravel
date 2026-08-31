@@ -71,3 +71,13 @@ también la maquetación, la estructura de pestañas y los estilos.
 4. Comparte ese enlace con tus compañeros. A partir de ahí, solo haz push de tus cambios y se publican automáticamente.
 
 El archivo `.nojekyll` omite el procesamiento de Jekyll. Todas las rutas de recursos son relativas, así que funciona en un despliegue bajo subruta.
+
+## Precaución
+
+> [!WARNING]
+> **No introduzcas datos sensibles directamente.** `data/trip.js` se confirma en el
+> repositorio y se publica de forma pública en GitHub Pages, y el historial de git lo
+> conserva aunque lo borres después. Deja fuera los números de reserva, de pasaporte o
+> DNI, los teléfonos, la dirección completa de casa y los códigos de acceso: comparte
+> eso con tus compañeros por un canal privado. Los nombres de lugares, las zonas y las
+> coordenadas del mapa no hay problema.

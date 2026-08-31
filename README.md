@@ -71,3 +71,12 @@ the layout, tab structure, and styling too.
 4. Share that link with your companions. After that, just push your changes and they go live automatically.
 
 The `.nojekyll` file skips Jekyll processing. All asset paths are relative, so it works under a sub-path deploy.
+
+## Caution
+
+> [!WARNING]
+> **Don't put sensitive data straight into the repo.** `data/trip.js` is committed and
+> served publicly on GitHub Pages, and git history keeps it even after you delete it.
+> Leave out booking references, passport/ID numbers, phone numbers, full home addresses,
+> and door codes — share those with your companions through a private channel. Place
+> names, areas, and map coordinates are fine.
