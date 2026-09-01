@@ -26,7 +26,7 @@ export const trip = {
       flightNo: "LJ201",
       depart: {
         airport: "ICN",
-        name: "인천국제공항 제2여객터미널",
+        name: "인천국제공항제2여객터미널",
         terminal: "T2",
         time: "2026-09-10T07:25",
         coords: { lat: 37.4602, lng: 126.4407 },
