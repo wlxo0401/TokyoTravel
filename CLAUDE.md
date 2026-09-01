@@ -41,8 +41,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   `checklist`(준비물, `tokyo-trip:checklist`). `is/toggle Visited`, `is/toggle Checked` export.
 - `js/render.js` — `trip` 객체를 DOM으로 그린다. 최상위 탭 **여행 정보 / 일정**
   (`makeTabs`, variant "main").
-  - 여행 정보 = 날씨 드롭다운(`trip.links`) + 지도 앱 바로가기 버튼(`trip.tools`)
-    + 하위 탭 (항공편 · 숙소 · 준비물). 준비물은 `trip.checklist`(그룹→아이템, 아이템
+  - 여행 정보 = "바로가기" 영역(`renderQuicklinks`) + 하위 탭 (항공편 · 숙소 · 준비물).
+    바로가기 = 날씨 드롭다운(`trip.links`, `.quicklinks` 안에서 pill 칩) + 지도 앱
+    버튼(`trip.tools`)을 한 줄에. 준비물은 `trip.checklist`(그룹→아이템, 아이템
     `key`로 체크 저장, 선택적 `url`), 상단에 "준비 완료 n / 전체" 카운터.
   - 항공편은 `flights[]`에서 파생 (`airline`·`flightNo`·출도착 시각/터미널/좌표).
     예약번호(`bookingRef`)는 개인정보라 데이터·화면 모두에서 다루지 않는다.

@@ -165,13 +165,17 @@ function renderWeather(trip) {
   return d;
 }
 
-/* ---------- 여행 정보 : 지도 앱·웹 바로가기 ---------- */
+/* ---------- 여행 정보 : 바로가기 (날씨 + 지도 앱) ---------- */
 
-function renderTools(trip) {
-  if (!trip.tools || !trip.tools.length) return null;
-  const row = el("div", "btn-row tools");
-  trip.tools.forEach((t) => row.append(linkBtn(`${t.icon || "🔗"} ${t.label}`, t.url)));
-  return row;
+// 날씨 드롭다운 + 지도 앱 버튼을 한 줄에 모은 "바로가기" 영역.
+function renderQuicklinks(trip) {
+  const wrap = el("div");
+  wrap.append(el("div", "section-label", "바로가기"));
+  const row = el("div", "quicklinks");
+  row.append(renderWeather(trip));
+  (trip.tools || []).forEach((t) => row.append(linkBtn(`${t.icon || "🔗"} ${t.label}`, t.url)));
+  wrap.append(row);
+  return wrap;
 }
 
 /* ---------- 여행 정보 : 준비물 체크리스트 ---------- */
@@ -228,9 +232,7 @@ function renderChecklist(trip) {
 
 function renderUtility(trip) {
   const box = el("div");
-  box.append(renderWeather(trip));
-  const tools = renderTools(trip);
-  if (tools) box.append(tools);
+  box.append(renderQuicklinks(trip));
   box.append(
     makeTabs([
       { id: "flights", label: "항공편", render: () => renderFlights(trip) },

@@ -121,31 +121,44 @@ h2 { font-size: 1.05rem; margin: 0 0 10px; }
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
 }
 
-/* 날씨 드롭다운 */
-.dropdown {
-  margin-bottom: 14px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: var(--card);
-}
-.dropdown > summary {
-  list-style: none;
-  cursor: pointer;
-  padding: 12px 14px;
+/* 여행 정보 · 바로가기 (날씨 드롭다운 + 지도 앱 버튼) */
+.section-label {
   font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: 10px;
 }
+.quicklinks {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.dropdown > summary { list-style: none; cursor: pointer; }
 .dropdown > summary::-webkit-details-marker { display: none; }
-.dropdown > summary::after { content: "▾"; float: right; color: var(--muted); }
+.dropdown > summary::after { content: "▾"; margin-left: 6px; color: var(--muted); }
 .dropdown[open] > summary::after { content: "▴"; }
-.dropdown-menu {
+
+/* 바로가기 줄 안에서는 날씨 드롭다운도 다른 버튼과 같은 pill 칩 */
+.quicklinks .dropdown > summary {
+  display: inline-block;
+  padding: 7px 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: #eef2ff;
+  border: 1px solid #dbe4ff;
+  border-radius: 999px;
+}
+.quicklinks .dropdown[open] { flex-basis: 100%; }
+.quicklinks .dropdown-menu {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 2px 14px 14px;
+  padding: 10px 0 2px;
 }
-
-/* 지도 앱 바로가기 */
-.tools { margin-bottom: 14px; }
 
 /* 준비물 체크리스트 */
 .checklist-head { margin-bottom: 10px; font-weight: 700; color: var(--muted); }
