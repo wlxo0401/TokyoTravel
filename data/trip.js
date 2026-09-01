@@ -17,47 +17,46 @@ export const trip = {
   },
 
   // 항공편: kind = "outbound"(가는 편) | "inbound"(오는 편)
+  // bookingRef(예약번호)는 개인정보라 넣지 않음 — 필요하면 각자 기기에서만 보관.
   flights: [
     {
       kind: "outbound",
       date: "2026-09-10",
-      airline: "TODO 항공사",
-      flightNo: "TODO 편명",
-      bookingRef: "TODO 예약번호",
+      airline: "진에어",
+      flightNo: "LJ201",
       depart: {
         airport: "ICN",
-        name: "인천국제공항 제1여객터미널",
-        terminal: "TODO (T1 / T2)",
-        time: "2026-09-10T00:00", // TODO 출발 시각
-        coords: { lat: 37.4483, lng: 126.4517 },
+        name: "인천국제공항 제2여객터미널",
+        terminal: "T2",
+        time: "2026-09-10T07:25",
+        coords: { lat: 37.4602, lng: 126.4407 },
       },
       arrive: {
         airport: "NRT",
         name: "나리타 국제공항",
         terminal: "TODO",
-        time: "2026-09-10T00:00", // TODO 도착 시각
+        time: "2026-09-10T09:55",
         coords: { lat: 35.7719, lng: 140.3929 },
       },
     },
     {
       kind: "inbound",
       date: "2026-09-13",
-      airline: "TODO 항공사",
-      flightNo: "TODO 편명",
-      bookingRef: "TODO 예약번호",
+      airline: "진에어",
+      flightNo: "LJ212",
       depart: {
         airport: "NRT",
-        name: "Narita Airport",
+        name: "나리타 국제공항",
         terminal: "TODO",
-        time: "2026-09-13T00:00", // TODO 출발 시각
+        time: "2026-09-13T19:15",
         coords: { lat: 35.7719, lng: 140.3929 },
       },
       arrive: {
         airport: "ICN",
-        name: "인천국제공항 제1여객터미널",
-        terminal: "TODO",
-        time: "2026-09-13T00:00", // TODO 도착 시각
-        coords: { lat: 37.4483, lng: 126.4517 },
+        name: "인천국제공항 제2여객터미널",
+        terminal: "T2",
+        time: "2026-09-13T21:45",
+        coords: { lat: 37.4602, lng: 126.4407 },
       },
     },
   ],

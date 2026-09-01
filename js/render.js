@@ -77,7 +77,7 @@ function makeTabs(items, variant = "") {
   return wrap;
 }
 
-/* ---------- 유틸리티 : 항공편 ---------- */
+/* ---------- 여행 정보 : 항공편 ---------- */
 
 function renderFlights(trip) {
   const sec = el("section", "card");
@@ -96,7 +96,7 @@ function renderFlights(trip) {
          ${f.arrive.airport} <span class="muted">${f.arrive.terminal}</span> ${fmtTime(f.arrive.time)}`
       )
     );
-    box.append(el("div", "muted small", `${f.airline} ${f.flightNo} · 예약번호 ${f.bookingRef}`));
+    box.append(el("div", "muted small", `${f.airline} ${f.flightNo}`));
 
     const btns = el("div", "btn-row");
     if (f.kind === "outbound") {
@@ -134,7 +134,7 @@ function renderFlights(trip) {
   return sec;
 }
 
-/* ---------- 유틸리티 : 숙소 ---------- */
+/* ---------- 여행 정보 : 숙소 ---------- */
 
 function renderStay(trip) {
   const a = trip.accommodation;
@@ -159,7 +159,7 @@ function renderStay(trip) {
   return sec;
 }
 
-/* ---------- 유틸리티 : 날씨 드롭다운 ---------- */
+/* ---------- 여행 정보 : 날씨 드롭다운 ---------- */
 
 function renderWeather(trip) {
   const d = el("details", "dropdown");
@@ -170,7 +170,7 @@ function renderWeather(trip) {
   return d;
 }
 
-/* ---------- 유틸리티 : 지도 앱·웹 바로가기 ---------- */
+/* ---------- 여행 정보 : 지도 앱·웹 바로가기 ---------- */
 
 function renderTools(trip) {
   if (!trip.tools || !trip.tools.length) return null;
@@ -179,7 +179,7 @@ function renderTools(trip) {
   return row;
 }
 
-/* ---------- 유틸리티 : 준비물 체크리스트 ---------- */
+/* ---------- 여행 정보 : 준비물 체크리스트 ---------- */
 
 function renderChecklist(trip) {
   const groups = trip.checklist || [];
@@ -370,7 +370,7 @@ export function renderTrip(trip, root) {
   root.append(
     makeTabs(
       [
-        { id: "util", label: "유틸리티", render: () => renderUtility(trip) },
+        { id: "util", label: "여행 정보", render: () => renderUtility(trip) },
         { id: "plan", label: "일정", render: () => renderPlan(trip) },
       ],
       "main"
