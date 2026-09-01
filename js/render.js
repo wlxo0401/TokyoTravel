@@ -154,20 +154,34 @@ function renderStay(trip) {
   return sec;
 }
 
-/* ---------- 여행 정보 : 날씨 드롭다운 ---------- */
+/* ---------- 여행 정보 : 날씨 (칩 → 모달) ---------- */
 
+// 날씨 칩 버튼 + 눌렀을 때 뜨는 <dialog> 모달을 하나의 fragment로 반환.
 function renderWeather(trip) {
-  const d = el("details", "dropdown");
-  d.append(el("summary", null, "🌤️ 날씨"));
-  const menu = el("div", "dropdown-menu");
+  const frag = document.createDocumentFragment();
+
+  const btn = el("button", "btn", "🌤️ 날씨");
+  const dlg = el("dialog", "wx-modal");
+  dlg.append(el("div", "wx-modal-title", "🌤️ 날씨"));
+  const menu = el("div", "wx-modal-menu");
   (trip.links || []).forEach((l) => menu.append(linkBtn(`${l.icon || "🔗"} ${l.label}`, l.url)));
-  d.append(menu);
-  return d;
+  dlg.append(menu);
+  const close = el("button", "btn wx-modal-close", "닫기");
+  dlg.append(close);
+
+  btn.addEventListener("click", () => dlg.showModal());
+  close.addEventListener("click", () => dlg.close());
+  dlg.addEventListener("click", (e) => {
+    if (e.target === dlg) dlg.close(); // 배경 클릭으로 닫기
+  });
+
+  frag.append(btn, dlg);
+  return frag;
 }
 
 /* ---------- 여행 정보 : 바로가기 (날씨 + 지도 앱) ---------- */
 
-// 날씨 드롭다운 + 지도 앱 버튼을 한 줄에 모은 "바로가기" 영역.
+// 날씨 칩 + 지도 앱 버튼을 한 줄(가로 스크롤)에 모은 "바로가기" 영역.
 function renderQuicklinks(trip) {
   const wrap = el("div");
   wrap.append(el("div", "section-label", "바로가기"));

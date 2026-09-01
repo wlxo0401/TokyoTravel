@@ -60,6 +60,7 @@ h2 { font-size: 1.05rem; margin: 0 0 10px; }
 .btn {
   display: inline-block;
   padding: 7px 12px;
+  font-family: inherit;
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--accent);
@@ -67,6 +68,8 @@ h2 { font-size: 1.05rem; margin: 0 0 10px; }
   border: 1px solid #dbe4ff;
   border-radius: 999px;
   text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
 }
 .btn:active { transform: translateY(1px); }
 
@@ -121,16 +124,14 @@ h2 { font-size: 1.05rem; margin: 0 0 10px; }
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
 }
 
-/* 여행 정보 · 바로가기 (날씨 드롭다운 + 지도 앱 버튼) */
+/* 여행 정보 · 바로가기 (날씨 칩 + 지도 앱 버튼, 가로 스크롤) */
 .section-label {
   font-weight: 700;
   font-size: 0.9rem;
   color: var(--muted);
   margin-bottom: 10px;
 }
-/* 바깥은 위치 기준(relative)만 잡고, 실제 태그 줄은 안쪽 strip이 가로 스크롤 */
 .quicklinks {
-  position: relative;
   margin-bottom: 16px;
 }
 .quicklinks-strip {
@@ -146,40 +147,19 @@ h2 { font-size: 1.05rem; margin: 0 0 10px; }
 .quicklinks-strip::-webkit-scrollbar { display: none; }
 .quicklinks-strip > * { flex: 0 0 auto; }
 
-.dropdown > summary { list-style: none; cursor: pointer; }
-.dropdown > summary::-webkit-details-marker { display: none; }
-.dropdown > summary::after { content: "▾"; margin-left: 6px; color: var(--muted); }
-.dropdown[open] > summary::after { content: "▴"; }
-
-/* 바로가기 줄 안에서는 날씨 드롭다운도 다른 버튼과 같은 pill 칩 */
-.quicklinks .dropdown { position: static; } /* 메뉴 기준을 .quicklinks로 */
-.quicklinks .dropdown > summary {
-  display: inline-block;
-  padding: 7px 12px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--accent);
-  background: #eef2ff;
-  border: 1px solid #dbe4ff;
-  border-radius: 999px;
+/* 날씨 모달 (<dialog>) */
+.wx-modal {
+  width: min(92vw, 360px);
+  padding: 18px;
+  border: 0;
+  border-radius: 16px;
+  box-shadow: 0 12px 44px rgba(0, 0, 0, 0.28);
+  color: var(--ink);
 }
-/* 열린 메뉴는 스크롤 strip 밖으로 떠서(overlay) 칩 아래에 표시 */
-.quicklinks .dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 30;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  min-width: 220px;
-  margin-top: 6px;
-  padding: 10px;
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
-}
+.wx-modal::backdrop { background: rgba(0, 0, 0, 0.42); }
+.wx-modal-title { font-weight: 700; font-size: 1.05rem; margin-bottom: 14px; }
+.wx-modal-menu { display: flex; flex-direction: column; gap: 8px; }
+.wx-modal-close { width: 100%; margin-top: 16px; text-align: center; }
 
 /* 준비물 체크리스트 */
 .checklist-head { margin-bottom: 10px; font-weight: 700; color: var(--muted); }
