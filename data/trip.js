@@ -67,11 +67,17 @@ export const trip = {
     name: "에어비앤비",
     area: "신주쿠",
     address: "신주쿠",
-    coords: null, // 정확 좌표는 저장 안 함 — 지도 버튼은 "신주쿠" 검색으로 동작
+    coords: null, // 정확 좌표는 저장 안 함
     checkIn: "2026-09-10T15:00",
     checkOut: "2026-09-13T10:00",
     url: "https://www.airbnb.com/trips",
     notes: "상세 주소 · 체크인 방법 · 도어락 · 와이파이는 에어비앤비 예약/메시지에서 확인",
+    // 숙소 주변 역. 정확한 숙소 위치 대신 이 역들 기준으로 길찾기 버튼을 만든다.
+    stations: [
+      { name: "신주쿠역", coords: { lat: 35.6900, lng: 139.7004 } },
+      { name: "신오쿠보역", coords: { lat: 35.7013, lng: 139.7003 } },
+      { name: "히가시신주쿠역", coords: { lat: 35.6976, lng: 139.7069 } },
+    ],
   },
 
   // 참고 링크 (날씨·기상 등). icon은 이모지.

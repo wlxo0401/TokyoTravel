@@ -46,6 +46,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
     `key`로 체크 저장, 선택적 `url`), 상단에 "준비 완료 n / 전체" 카운터.
   - 항공편은 `flights[]`에서 파생 (`airline`·`flightNo`·출도착 시각/터미널/좌표).
     예약번호(`bookingRef`)는 개인정보라 데이터·화면 모두에서 다루지 않는다.
+  - 숙소는 상세 주소·좌표를 저장하지 않는다. `accommodation.url`(에어비앤비 여행
+    목록) + `accommodation.stations[]`(주변 역 이름·좌표)로 "예약 확인 / 역별 길찾기"
+    버튼만 만든다.
   - 일정 = 우선순위 필터 칩 + 날짜별 탭(`renderDayBody`). 각 일자 본문에 해당 날짜의
     항공편·체크인/아웃 "고정 일정"을 자동으로 끼워 넣는다(anchors). 나머지는
     `지역 → 후보 장소(priority: must/want/maybe)` 계층. 필터 상태는 모듈 변수

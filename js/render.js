@@ -152,9 +152,10 @@ function renderStay(trip) {
   if (a.notes) sec.append(el("div", "small note", a.notes));
 
   const btns = el("div", "btn-row");
-  btns.append(linkBtn("숙소 지도 (구글)", googlePlace(a.coords, a.address)));
-  btns.append(linkBtn("숙소 길찾기 (구글)", googleDirections({ destination: a.coords || a.address, mode: "transit" })));
   if (a.url && !a.url.startsWith("TODO")) btns.append(linkBtn("에어비앤비 예약 확인", a.url));
+  (a.stations || []).forEach((s) =>
+    btns.append(linkBtn(`${s.name} 길찾기`, googleDirections({ destination: s.coords || s.name, mode: "transit" })))
+  );
   sec.append(btns);
   return sec;
 }
