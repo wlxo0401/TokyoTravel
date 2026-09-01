@@ -40,9 +40,9 @@ const fmtTime = (iso) => {
   return new Intl.DateTimeFormat("ko-KR", { hour: "2-digit", minute: "2-digit", hour12: false }).format(t);
 };
 
-// 링크 버튼. naver=true면 앱 딥링크 + 웹 폴백.
+// 링크 버튼. naver=true면 앱 딥링크(nmap://) + 웹 폴백(app.js가 data-nfallback 처리).
 function linkBtn(text, href, { naver = false, fallback = "" } = {}) {
-  const a = el("a", "btn" + (naver ? " btn-naver" : ""), text);
+  const a = el("a", "btn", text);
   a.href = href;
   a.target = "_blank";
   a.rel = "noopener";
@@ -119,12 +119,6 @@ function renderFlights(trip) {
         )
       );
       btns.append(linkBtn("공항 지도 (구글)", googlePlace(f.depart.coords, f.depart.name)));
-      btns.append(
-        linkBtn("집 가는 길 (네이버)", naverRoute({ from: f.arrive.coords, to: trip.home.coords, toName: trip.home.name }), {
-          naver: true,
-          fallback: naverSearch(f.arrive.name),
-        })
-      );
     }
     btns.append(linkBtn("실시간 운항", flightStatusUrl(f.airline, f.flightNo)));
     box.append(btns);

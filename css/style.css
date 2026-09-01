@@ -7,7 +7,6 @@
   --muted: #6b7280;
   --line: #e5e7eb;
   --accent: #2563eb;
-  --naver: #03c75a;
   --must: #dc2626;
   --want: #2563eb;
   --maybe: #9ca3af;
@@ -70,7 +69,6 @@ h2 { font-size: 1.05rem; margin: 0 0 10px; }
   text-decoration: none;
 }
 .btn:active { transform: translateY(1px); }
-.btn-naver { color: #fff; background: var(--naver); border-color: var(--naver); }
 
 /* 탭 */
 .tabnav {
