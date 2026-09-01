@@ -26,7 +26,7 @@ export const trip = {
       flightNo: "LJ201",
       depart: {
         airport: "ICN",
-        name: "인천국제공항제2여객터미널",
+        name: "인천국제공항 제2여객터미널",
         terminal: "T2",
         time: "2026-09-10T07:25",
         coords: { lat: 37.4602, lng: 126.4407 },
@@ -61,16 +61,17 @@ export const trip = {
     },
   ],
 
-  // 숙소 (에어비앤비)
+  // 숙소 (에어비앤비). 상세 주소·예약번호는 공개 저장소에 넣지 않는다 —
+  // "예약 확인" 버튼이 에어비앤비 여행 목록으로 보내주면 앱에서 직접 확인.
   accommodation: {
     name: "에어비앤비",
-    area: "TODO 지역 (예: 신주쿠)",
-    address: "TODO 상세 주소",
-    coords: null, // { lat, lng } — 채워넣으면 지도/길찾기 버튼이 정확해집니다
+    area: "신주쿠",
+    address: "신주쿠",
+    coords: null, // 정확 좌표는 저장 안 함 — 지도 버튼은 "신주쿠" 검색으로 동작
     checkIn: "2026-09-10T15:00",
     checkOut: "2026-09-13T10:00",
-    url: "TODO 에어비앤비 예약 링크",
-    notes: "체크인 방법 · 도어락 · 와이파이 등 메모",
+    url: "https://www.airbnb.com/trips",
+    notes: "상세 주소 · 체크인 방법 · 도어락 · 와이파이는 에어비앤비 예약/메시지에서 확인",
   },
 
   // 참고 링크 (날씨·기상 등). icon은 이모지.

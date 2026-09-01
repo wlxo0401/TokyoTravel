@@ -141,7 +141,7 @@ function renderStay(trip) {
   const sec = el("section", "card");
   sec.append(el("h2", null, "🏠 숙소"));
   sec.append(el("div", null, `<strong>${a.name}</strong> · ${a.area}`));
-  sec.append(el("div", "muted small", a.address));
+  if (a.address && a.address !== a.area) sec.append(el("div", "muted small", a.address));
   sec.append(
     el(
       "div",
@@ -154,7 +154,7 @@ function renderStay(trip) {
   const btns = el("div", "btn-row");
   btns.append(linkBtn("숙소 지도 (구글)", googlePlace(a.coords, a.address)));
   btns.append(linkBtn("숙소 길찾기 (구글)", googleDirections({ destination: a.coords || a.address, mode: "transit" })));
-  if (a.url && !a.url.startsWith("TODO")) btns.append(linkBtn("예약 확인", a.url));
+  if (a.url && !a.url.startsWith("TODO")) btns.append(linkBtn("에어비앤비 예약 확인", a.url));
   sec.append(btns);
   return sec;
 }
