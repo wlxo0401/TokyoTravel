@@ -171,10 +171,12 @@ function renderWeather(trip) {
 function renderQuicklinks(trip) {
   const wrap = el("div");
   wrap.append(el("div", "section-label", "바로가기"));
-  const row = el("div", "quicklinks");
-  row.append(renderWeather(trip));
-  (trip.tools || []).forEach((t) => row.append(linkBtn(`${t.icon || "🔗"} ${t.label}`, t.url)));
-  wrap.append(row);
+  const box = el("div", "quicklinks");
+  const strip = el("div", "quicklinks-strip");
+  strip.append(renderWeather(trip));
+  (trip.tools || []).forEach((t) => strip.append(linkBtn(`${t.icon || "🔗"} ${t.label}`, t.url)));
+  box.append(strip);
+  wrap.append(box);
   return wrap;
 }
 
