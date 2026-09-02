@@ -192,33 +192,49 @@ h2 { font-size: 1.05rem; margin: 0 0 10px; }
 .anchors a { color: var(--accent); }
 .note { margin: 8px 0; color: var(--muted); }
 
-.area { margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--line); }
-.day-body > .area:first-child { margin-top: 4px; border-top: 0; }
 .area-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .area-name { font-weight: 700; }
 .area-head .btn { padding: 4px 10px; font-size: 0.78rem; }
 
-/* 장소 */
-.place {
-  display: flex;
-  gap: 10px;
-  padding: 10px 0;
+/* 일정 동선 타임라인 */
+.flow {
+  margin-top: 8px;
+  border-left: 2px solid var(--line);
+  padding-left: 16px;
+}
+.flow > * {
+  position: relative;
+  margin: 0 0 14px;
+}
+.flow > *::before {
+  content: "";
+  position: absolute;
+  left: -23px;
+  top: 4px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--line);
+}
+.flow > .flow-stop::before,
+.flow > .flow-stay::before { border-color: var(--accent); }
+.flow > *:last-child { margin-bottom: 0; }
+
+.flow-move { color: var(--muted); font-size: 0.9rem; }
+
+.flow-stop {
+  padding: 10px 12px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.flow-stay { font-weight: 600; }
+
+.flow-item {
+  padding: 8px 0;
   border-top: 1px solid var(--line);
 }
-.place.visited { opacity: 0.5; }
-.place.visited .place-name { text-decoration: line-through; }
-.check {
-  flex: 0 0 26px;
-  width: 26px;
-  height: 26px;
-  margin-top: 2px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: #fff;
-  color: var(--accent);
-  font-size: 0.9rem;
-  line-height: 1;
-}
-.place-main { flex: 1; min-width: 0; }
-.place-name { font-weight: 600; }
-.place-main .btn { padding: 4px 10px; font-size: 0.78rem; }
+.flow-item:first-of-type { border-top: 0; padding-top: 4px; }
+.flow-item .btn-row { margin-top: 6px; }
+.flow-item .btn { padding: 4px 10px; font-size: 0.78rem; }

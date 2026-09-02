@@ -5,16 +5,8 @@ import {
   naverRoute,
   flightStatusUrl,
 } from "./maps.js";
-import { isVisited, toggleVisited, isChecked, toggleChecked } from "./state.js";
+import { isChecked, toggleChecked } from "./state.js";
 
-const CATEGORY = {
-  food: "🍜",
-  cafe: "☕",
-  shopping: "🛍️",
-  sight: "📸",
-  activity: "🎯",
-  transport: "🚆",
-};
 const el = (tag, cls, html) => {
   const n = document.createElement(tag);
   if (cls) n.className = cls;
@@ -255,62 +247,81 @@ function renderUtility(trip) {
 
 /* ---------- 일정 ---------- */
 
-function placeRow(day, area, place) {
-  const row = el("div", "place");
-  const key = `${day.date}|${area.name}|${place.name}`;
-  if (isVisited(key)) row.classList.add("visited");
+// stop 스텝: 한 지역 + 그 안에서 하는 것들(items)
+function flowStop(step) {
+  const box = el("div", "flow-stop");
+  const head = el("div", "area-head");
+  head.append(el("span", "area-name", `📍 ${step.area}`));
+  head.append(linkBtn("지역 지도", googlePlace(step.coords, step.area)));
+  box.append(head);
+  if (step.note) box.append(el("div", "muted small", step.note));
 
-  const check = el("button", "check", isVisited(key) ? "✓" : "");
-  check.title = "가봤음 표시";
-  check.addEventListener("click", () => {
-    const now = toggleVisited(key);
-    row.classList.toggle("visited", now);
-    check.textContent = now ? "✓" : "";
+  (step.items || []).forEach((it) => {
+    const row = el("div", "flow-item");
+    row.append(el("div", null, it.text));
+    if (it.place || it.coords) {
+      const btns = el("div", "btn-row");
+      btns.append(linkBtn("지도", googlePlace(it.coords, it.place || it.text)));
+      btns.append(
+        linkBtn("길찾기", googleDirections({ destination: it.coords || it.place || it.text, mode: "transit" }))
+      );
+      row.append(btns);
+    }
+    box.append(row);
   });
+  return box;
+}
 
-  const main = el("div", "place-main");
-  main.append(el("div", "place-name", `${CATEGORY[place.category] || "📍"} ${place.name}`));
-  if (place.note) main.append(el("div", "muted small", place.note));
+// move 스텝: 이동 구간 (노선 + 소요시간)
+function flowMove(step) {
+  const box = el("div", "flow-move");
+  const mins = step.mins ? ` <span class="muted">· 약 ${step.mins}분</span>` : "";
+  box.append(el("div", null, `🚆 ${step.label}${mins}`));
+  if (step.note) box.append(el("div", "muted small", step.note));
+  return box;
+}
 
-  const btns = el("div", "btn-row");
-  btns.append(linkBtn("지도", googlePlace(place.coords, place.name)));
-  btns.append(linkBtn("길찾기", googleDirections({ destination: place.coords || place.name, mode: "walking" })));
-  main.append(btns);
+// checkin/checkout 스텝: accommodation에서 파생 (데이터 중복 없음)
+function flowStay(trip, kind) {
+  const a = trip.accommodation;
+  const box = el("div", "flow-stay");
+  if (kind === "checkin")
+    box.append(el("div", null, `🏠 ${fmtTime(a.checkIn)}~ ${a.area} 숙소 체크인 · 짐 넣기`));
+  else box.append(el("div", null, `🧳 ${fmtTime(a.checkOut)}까지 체크아웃`));
+  return box;
+}
 
-  row.append(check, main);
-  return row;
+function renderStep(trip, step) {
+  if (step.kind === "move") return flowMove(step);
+  if (step.kind === "checkin" || step.kind === "checkout") return flowStay(trip, step.kind);
+  return flowStop(step);
 }
 
 function renderDayBody(trip, day) {
   const wrap = el("div", "day-body");
 
+  // 해당 날짜의 항공편은 자동으로 맨 위에 표시.
+  // 가는 편은 "도착"(도쿄 기준), 오는 편은 "출발"이 그날의 기준점.
   const anchors = [];
   trip.flights.forEach((f) => {
     if (f.date === day.date) {
-      const t = f.kind === "outbound" ? `${f.depart.airport} 출발` : `${f.arrive.airport} 도착`;
-      anchors.push(`✈️ ${fmtTime(f.kind === "outbound" ? f.depart.time : f.arrive.time)} ${t}`);
+      const out = f.kind === "outbound";
+      const p = out ? f.arrive : f.depart;
+      anchors.push(`✈️ ${fmtTime(p.time)} ${p.airport} ${out ? "도착" : "출발"}`);
     }
   });
-  if (trip.accommodation.checkIn.startsWith(day.date))
-    anchors.push(`🔑 ${fmtTime(trip.accommodation.checkIn)} 체크인`);
-  if (trip.accommodation.checkOut.startsWith(day.date))
-    anchors.push(`🧳 ${fmtTime(trip.accommodation.checkOut)} 체크아웃`);
   if (anchors.length) wrap.append(el("div", "anchors small", anchors.join("<br>")));
 
   if (day.note) wrap.append(el("div", "note small", day.note));
 
-  day.areas.forEach((area) => {
-    const box = el("div", "area");
-    const head = el("div", "area-head");
-    head.append(el("span", "area-name", area.name));
-    head.append(linkBtn("지역 지도", googlePlace(area.coords, area.name)));
-    box.append(head);
-    if (area.note) box.append(el("div", "muted small", area.note));
-    area.places.forEach((pl) => box.append(placeRow(day, area, pl)));
-    wrap.append(box);
-  });
-
-  if (!day.areas.length) wrap.append(el("div", "muted small", "계획 미정 — 자유롭게 채워보세요."));
+  const flow = day.flow || [];
+  if (flow.length) {
+    const tl = el("div", "flow");
+    flow.forEach((step) => tl.append(renderStep(trip, step)));
+    wrap.append(tl);
+  } else {
+    wrap.append(el("div", "muted small", "계획 미정 — 자유롭게 채워보세요."));
+  }
 
   return wrap;
 }

@@ -37,8 +37,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   웹 검색 폴백), 일본 내 이동은 구글 Maps URL.** 좌표가 없으면 "현재 위치"/이름 검색으로
   degrade 하도록 설계됨.
 - `js/state.js` — 체크 상태를 `localStorage`에 저장(기기·브라우저별, 공유 안 됨).
-  범용 `store(key)` 팩토리 위에 두 종류: `visited`(가 본 장소, `tokyo-trip:visited`),
-  `checklist`(준비물, `tokyo-trip:checklist`). `is/toggle Visited`, `is/toggle Checked` export.
+  범용 `store(key)` 팩토리 위에 `checklist`(준비물, `tokyo-trip:checklist`) 하나.
+  `is/toggle Checked` export. (일정 "가 본 장소" 체크는 없앴다.)
 - `js/render.js` — `trip` 객체를 DOM으로 그린다. 최상위 탭 **여행 정보 / 일정**
   (`makeTabs`, variant "main").
   - 여행 정보 = "바로가기" 영역(`renderQuicklinks`) + 하위 탭 (항공편 · 숙소 · 준비물).
@@ -51,10 +51,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   - 숙소는 상세 주소·좌표를 저장하지 않는다. `accommodation.url`(에어비앤비 여행
     목록) + `accommodation.stations[]`(주변 역 이름·좌표)로 "예약 확인 / 역별 길찾기"
     버튼만 만든다.
-  - 일정 = 날짜별 탭(`renderDayBody`)만. 각 일자 본문에 해당 날짜의
-    항공편·체크인/아웃 "고정 일정"을 자동으로 끼워 넣는다(anchors). 나머지는
-    `지역 → 후보 장소` 계층으로 나열만 한다. 데이터에 `priority`(must/want/maybe)
-    필드는 남아 있지만 화면에는 표시하지 않고 필터도 없다.
+  - 일정 = 날짜별 탭(`renderDayBody`). 각 일자 본문 = 해당 날짜 항공편 anchor(가는 편은
+    "도착", 오는 편은 "출발") + `day.note` + `day.flow[]` 세로 타임라인.
+    `flow[]` 스텝: `move`(이동 구간·소요시간), `stop`(지역+`items[]`, item은 `text`만이면
+    메모·`place`/`coords` 있으면 지도·길찾기 버튼), `checkin`/`checkout`(accommodation에서 파생).
+    체크박스·우선순위·필터는 없다.
 - `js/app.js` — 진입점. 렌더 호출 + 네이버 딥링크 실패 시 웹 폴백 핸들러.
 
 ## README 다국어
@@ -65,9 +66,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 데이터 모델 요약
 
-`trip.days[].areas[].places[]` 3단 계층이 "유동적 계획"의 핵심이다. 시간표가 아니라
-느슨한 순서 + 후보 목록. 고정 일정(비행기/체크인)은 데이터 중복 없이 `flights`와
-`accommodation`에서 파생시켜 표시한다.
+`trip.days[].flow[]` (순서 있는 스텝 배열)이 "유동적 계획"의 핵심이다. 시간표가 아니라
+도착→지역→숙소로 이어지는 느슨한 동선. 스텝은 `move`/`stop`/`checkin`/`checkout`.
+고정 일정(비행기/체크인)은 데이터 중복 없이 `flights`와 `accommodation`에서 파생한다
+(`checkin`/`checkout` 스텝은 위치만 표시하고 시각은 `accommodation`에서 읽음).
+1일차만 실제 동선으로 채워져 있고 2~4일차는 `stop`만 있는 틀 상태.
 
 `trip`의 최상위 키: `title`·`subtitle`·`dates`, `home`, `flights[]`, `accommodation`,
 `links[]`(날씨), `tools[]`(지도 앱 바로가기), `checklist[]`(준비물), `days[]`.

@@ -28,9 +28,9 @@ Por eso esta app trata la planificación como dos fases separadas.
 - **Durante el viaje — consulta (solo lectura)**: aquí no editas el plan. Sirve para
   **consultar lo que preparaste y decidir rápido sobre la marcha.**
   - Ve la ruta de hoy de un vistazo con las pestañas por fecha
-  - Consulta una lista flexible de lugares candidatos por zona y elige sobre la marcha, no un horario
+  - Sigue el recorrido del día en orden — llegada, barrios, equipaje, check-in — como un flujo flexible, no un horario rígido
   - Un toque para indicaciones en el mapa (Naver para los tramos en Corea, Google para los de Japón)
-  - Marca los lugares que ya has visitado (se guarda localmente en tu dispositivo)
+  - Consulta los trayectos entre paradas y las notas logísticas (consignas, equipaje) ahí mismo
 
 El plan no se impone. En lugar de un horario fijo, mantén un orden flexible y una lista corta,
 y ve eligiendo sobre la marcha. Eso es viajar.

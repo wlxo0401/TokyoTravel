@@ -29,10 +29,7 @@ function store(key) {
   };
 }
 
-const visited = store("tokyo-trip:visited"); // 가 본 장소
 const checklist = store("tokyo-trip:checklist"); // 준비물 체크
 
-export const isVisited = (k) => visited.has(k);
-export const toggleVisited = (k) => visited.toggle(k);
 export const isChecked = (k) => checklist.has(k);
 export const toggleChecked = (k) => checklist.toggle(k);

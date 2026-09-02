@@ -28,9 +28,9 @@ Cette application traite donc la planification en deux phases distinctes.
 - **Pendant le voyage — référence (lecture seule)** : ici, vous ne modifiez pas le plan. Il sert à
   **consulter ce que vous avez préparé et à décider vite sur place.**
   - Voyez l'itinéraire du jour d'un coup d'œil grâce aux onglets par date
-  - Parcourez une liste souple de lieux candidats par quartier et choisissez sur place, pas un horaire
+  - Suivez l'itinéraire du jour dans l'ordre — arrivée, quartiers, bagages, arrivée au logement — comme un déroulé souple, pas un horaire rigide
   - Un appui pour l'itinéraire sur la carte (Naver pour les trajets en Corée, Google pour ceux au Japon)
-  - Cochez les lieux déjà visités (enregistré localement sur votre appareil)
+  - Voyez les trajets entre les étapes et les notes logistiques (consignes, bagages) sur place
 
 Le plan n'est pas imposé. Au lieu d'un horaire fixe, gardez un ordre souple et une liste courte,
 et choisissez au fil de l'eau. C'est ça, voyager.

@@ -139,46 +139,79 @@ export const trip = {
     },
   ],
 
-  // 일자별 계획: 시간표가 아니라 "지역 → 후보 장소" 구조. 순서는 느슨한 가이드.
-  // priority: "must" | "want" | "maybe" — 데이터에는 남겨두지만 현재 화면에는 표시하지 않음.
-  // category: "food" | "cafe" | "shopping" | "sight" | "activity" | "transport"
+  // 일자별 계획: 시간표가 아니라 "도착 → 지역 → 숙소" 순서 있는 동선(flow).
+  // flow[] 스텝 종류:
+  //   { kind: "move",  label, mins?, note? }                              — 이동 구간
+  //   { kind: "stop",  area, coords, note?, items: [ { text, place?, coords? } ] }  — 지역 + 할 것들
+  //   { kind: "checkin" } | { kind: "checkout" }                          — accommodation에서 파생
+  // items의 항목은 text만 있으면 메모, place/coords가 붙으면 지도·길찾기 버튼이 생긴다.
+  // 좌표가 없으면 지도 버튼은 이름 검색으로 degrade. 해당 날짜 항공편은 자동으로 맨 위 표시.
   days: [
     {
       date: "2026-09-10",
-      title: "1일차 · 도착 & 정착",
-      note: "오후·저녁 도착. 무리하지 말고 숙소 주변만 가볍게.",
-      areas: [
+      title: "1일차 · 도착 & 아키하바라·아사쿠사",
+      note: "오전 도착. 짐은 코인락커에 맡기고 가볍게 돌다가 오후에 숙소로.",
+      flow: [
         {
-          name: "신주쿠",
-          coords: { lat: 35.6896, lng: 139.7006 },
-          note: "숙소 인근. 저녁 식사 + 산책.",
-          places: [
-            { name: "오모이데 요코초", category: "food", priority: "want", coords: { lat: 35.6935, lng: 139.6996 }, note: "야키토리 골목" },
-            { name: "돈키호테 신주쿠 히가시구치점", category: "shopping", priority: "maybe", coords: { lat: 35.6919, lng: 139.7053 }, note: "심야 쇼핑" },
-            { name: "신주쿠 교엔", category: "sight", priority: "maybe", coords: { lat: 35.6852, lng: 139.7100 }, note: "시간·체력 남으면" },
+          kind: "move",
+          label: "케이세이 스카이라이너 → 닛포리 환승 → JR 아키하바라",
+          mins: 60,
+          note: "스카이라이너는 닛포리까지 약 36분. 닛포리에서 JR 야마노테/게이힌토호쿠로 2정거장.",
+        },
+        {
+          kind: "stop",
+          area: "아키하바라",
+          coords: { lat: 35.6984, lng: 139.7731 },
+          items: [
+            { text: "코인락커에 캐리어 맡기기 — JR 아키하바라역 중앙개찰구 2층에 대형(600엔)·특대(800엔) 락커" },
+            { text: "전자상가 · 요도바시 아키바 · 애니메이트 구경", place: "아키하바라 전자상가", coords: { lat: 35.6989, lng: 139.7719 } },
           ],
         },
+        {
+          kind: "move",
+          label: "츠쿠바 익스프레스 (아키하바라 → 아사쿠사)",
+          mins: 8,
+          note: "약 10분 간격. TX 아사쿠사역은 센소지 서쪽, 거기서 도보 약 8분.",
+        },
+        {
+          kind: "stop",
+          area: "아사쿠사",
+          coords: { lat: 35.7119, lng: 139.7960 },
+          items: [
+            { text: "센소지 · 가미나리몬 · 나카미세 거리", place: "센소지", coords: { lat: 35.7148, lng: 139.7967 } },
+            { text: "여유되면 스미다 강변에서 도쿄 스카이트리 뷰", place: "아즈마바시", coords: { lat: 35.7107, lng: 139.8005 } },
+          ],
+        },
+        {
+          kind: "move",
+          label: "아사쿠사 → 아키하바라 들러 캐리어 회수 → 신주쿠 방면",
+          mins: 50,
+          note: "쿠라마에역에서 오에도선 타면 히가시신주쿠 직통(도보 환승 약 5분).",
+        },
+        { kind: "checkin" },
       ],
     },
     {
       date: "2026-09-11",
       title: "2일차 · 하라주쿠 / 시부야",
       note: "쇼핑 데이. 동선: 하라주쿠 → 오모테산도 → 시부야.",
-      areas: [
+      flow: [
         {
-          name: "하라주쿠 · 오모테산도",
+          kind: "stop",
+          area: "하라주쿠 · 오모테산도",
           coords: { lat: 35.6702, lng: 139.7027 },
-          places: [
-            { name: "다케시타 거리", category: "shopping", priority: "want", coords: { lat: 35.6716, lng: 139.7050 } },
-            { name: "오모테산도 힐즈", category: "shopping", priority: "maybe", coords: { lat: 35.6659, lng: 139.7118 } },
+          items: [
+            { text: "다케시타 거리", place: "다케시타 거리", coords: { lat: 35.6716, lng: 139.7050 } },
+            { text: "오모테산도 힐즈", place: "오모테산도 힐즈", coords: { lat: 35.6659, lng: 139.7118 } },
           ],
         },
         {
-          name: "시부야",
+          kind: "stop",
+          area: "시부야",
           coords: { lat: 35.6595, lng: 139.7005 },
-          places: [
-            { name: "시부야 스크램블 스퀘어 (전망대)", category: "sight", priority: "want", coords: { lat: 35.6580, lng: 139.7016 } },
-            { name: "미야시타 파크", category: "shopping", priority: "maybe", coords: { lat: 35.6614, lng: 139.7009 } },
+          items: [
+            { text: "시부야 스크램블 스퀘어 (전망대)", place: "시부야 스크램블 스퀘어", coords: { lat: 35.6580, lng: 139.7016 } },
+            { text: "미야시타 파크", place: "미야시타 파크", coords: { lat: 35.6614, lng: 139.7009 } },
           ],
         },
       ],
@@ -187,20 +220,22 @@ export const trip = {
       date: "2026-09-12",
       title: "3일차 · 아사쿠사 / 우에노",
       note: "구도심. 오전 일찍 아사쿠사, 오후 우에노.",
-      areas: [
+      flow: [
         {
-          name: "아사쿠사",
+          kind: "stop",
+          area: "아사쿠사",
           coords: { lat: 35.7148, lng: 139.7967 },
-          places: [
-            { name: "센소지", category: "sight", priority: "must", coords: { lat: 35.7148, lng: 139.7967 } },
-            { name: "나카미세 거리", category: "shopping", priority: "want", coords: { lat: 35.7119, lng: 139.7960 } },
+          items: [
+            { text: "센소지", place: "센소지", coords: { lat: 35.7148, lng: 139.7967 } },
+            { text: "나카미세 거리", place: "나카미세 거리", coords: { lat: 35.7119, lng: 139.7960 } },
           ],
         },
         {
-          name: "우에노",
+          kind: "stop",
+          area: "우에노",
           coords: { lat: 35.7138, lng: 139.7770 },
-          places: [
-            { name: "아메요코 시장", category: "food", priority: "want", coords: { lat: 35.7089, lng: 139.7745 } },
+          items: [
+            { text: "아메요코 시장", place: "아메요코 시장", coords: { lat: 35.7089, lng: 139.7745 } },
           ],
         },
       ],
@@ -208,8 +243,16 @@ export const trip = {
     {
       date: "2026-09-13",
       title: "4일차 · 귀국",
-      note: "체크아웃 10:00. 공항 이동은 여유있게.",
-      areas: [],
+      note: "공항 이동은 여유있게. 출발 3시간 전 도착 권장.",
+      flow: [
+        { kind: "checkout" },
+        {
+          kind: "move",
+          label: "숙소(히가시신주쿠) → 나리타 공항",
+          mins: 90,
+          note: "신주쿠에서 나리타 익스프레스(N'EX) 또는 공항버스.",
+        },
+      ],
     },
   ],
 };
