@@ -228,6 +228,7 @@ function renderChecklist(trip) {
     wrap.append(sec);
   });
 
+  if (trip.checklistNote) wrap.append(el("div", "small note", trip.checklistNote));
   wrap.append(el("div", "small muted note", "체크 상태는 이 기기에만 저장됩니다 (일행과 공유되지 않음)."));
   return wrap;
 }

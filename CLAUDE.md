@@ -46,7 +46,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
     토글 위에 고정.
   - 여행 정보 = 상단에 Visit Japan Web 버튼(`trip.visitJapanWeb`, `.vjw-row`) + 하위 탭
     (항공편 · 숙소 · 준비물). 준비물은 `trip.checklist`(그룹→아이템, 아이템
-    `key`로 체크 저장, 선택적 `url`), 상단에 "준비 완료 n / 전체" 카운터.
+    `key`로 체크 저장, 선택적 `url`), 상단에 "준비 완료 n / 전체" 카운터,
+    목록 아래 `trip.checklistNote` 안내 문구.
   - 항공편은 `flights[]`에서 파생 (`airline`·`flightNo`·출도착 시각/터미널/좌표).
     예약번호(`bookingRef`)는 개인정보라 데이터·화면 모두에서 다루지 않는다.
   - 숙소는 상세 주소·좌표를 저장하지 않는다. `accommodation.url`(에어비앤비 여행
@@ -77,4 +78,4 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 `trip`의 최상위 키: `title`·`subtitle`·`dates`, `home`, `flights[]`, `accommodation`,
 `links[]`(날씨), `tools[]`(지도 앱 바로가기), `visitJapanWeb`(입국 심사 URL),
-`checklist[]`(준비물), `days[]`.
+`checklist[]`(준비물)·`checklistNote`, `days[]`.
