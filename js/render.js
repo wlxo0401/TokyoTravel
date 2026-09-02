@@ -251,6 +251,12 @@ function renderUtility(trip) {
 
 /* ---------- 일정 ---------- */
 
+// step.note는 문자열 또는 문자열 배열 — 배열이면 줄마다 별도로 그린다.
+function appendNote(box, note) {
+  if (!note) return;
+  (Array.isArray(note) ? note : [note]).forEach((n) => box.append(el("div", "muted small", n)));
+}
+
 // stop 스텝: 한 지역 + 그 안에서 하는 것들(items)
 function flowStop(step) {
   const box = el("div", "flow-stop");
@@ -258,7 +264,7 @@ function flowStop(step) {
   head.append(el("span", "area-name", `📍 ${step.area}`));
   head.append(linkBtn("지역 지도", googlePlace(step.coords, step.area)));
   box.append(head);
-  if (step.note) box.append(el("div", "muted small", step.note));
+  appendNote(box, step.note);
 
   (step.items || []).forEach((it) => {
     const row = el("div", "flow-item" + (it.optional ? " flow-item-opt" : ""));
@@ -281,7 +287,7 @@ function flowMove(step) {
   const box = el("div", "flow-move");
   const mins = step.mins ? ` <span class="muted">· 약 ${step.mins}분</span>` : "";
   box.append(el("div", null, `🚆 ${step.label}${mins}`));
-  if (step.note) box.append(el("div", "muted small", step.note));
+  appendNote(box, step.note);
   return box;
 }
 
