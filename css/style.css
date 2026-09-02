@@ -255,3 +255,17 @@ h2 { font-size: 1.05rem; margin: 0 0 10px; }
   color: var(--muted);
   white-space: nowrap;
 }
+
+/* 장거리 이동일에만 쓰는 시각 배지 (move/stop) */
+.time-badge {
+  display: inline-block;
+  margin: 0 6px 0 0;
+  padding: 1px 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  white-space: nowrap;
+  vertical-align: middle;
+}

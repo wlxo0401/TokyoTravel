@@ -72,7 +72,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 `trip.days[].flow[]` (순서 있는 스텝 배열)이 "유동적 계획"의 핵심이다. 시간표가 아니라
 지역→지역으로 이어지는 느슨한 동선(구간 이동 시간만 표시, 시각은 안 박음).
-스텝은 `move`(`walk:true`면 도보 아이콘)/`stop`/`checkin`/`checkout`.
+스텝은 `move`(`walk:true`면 도보 아이콘)/`stop`/`checkin`/`checkout`. 대부분 시각을 안 쓰지만
+`time`을 넣으면 배지로 표시됨 — 왕복이 멀어 시각이 의미 있는 날(2일차 가와구치코)에만 사용.
 고정 일정(비행기/체크인)은 데이터 중복 없이 `flights`와 `accommodation`에서 파생한다
 (`checkin`/`checkout` 스텝은 위치만 표시하고 시각은 `accommodation`에서 읽음).
 1일차 도착·야간, 2일차 가와구치코 당일치기, 3일차 하라주쿠·시부야 도보, 4일차 도쿄역·고쿄·긴자+귀국.

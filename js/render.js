@@ -263,6 +263,7 @@ function flowStop(step) {
   const box = el("div", "flow-stop");
   const head = el("div", "area-head");
   head.append(el("span", "area-name", `📍 ${step.area}`));
+  if (step.time) head.append(el("span", "time-badge", step.time));
   head.append(linkBtn("지역 지도", googlePlace(step.coords, step.area)));
   box.append(head);
   appendNote(box, step.note);
@@ -284,10 +285,12 @@ function flowStop(step) {
 }
 
 // move 스텝: 이동 구간 (노선 + 소요시간). walk:true면 도보 아이콘.
+// time은 대부분의 날엔 안 쓰고, 장거리라 시각이 의미 있는 날(예: 2일차)에만 넣는다.
 function flowMove(step) {
   const box = el("div", "flow-move");
   const mins = step.mins ? ` <span class="muted">· 약 ${step.mins}분</span>` : "";
-  box.append(el("div", null, `${step.walk ? "🚶" : "🚆"} ${step.label}${mins}`));
+  const time = step.time ? `<span class="time-badge">${step.time}</span> ` : "";
+  box.append(el("div", null, `${time}${step.walk ? "🚶" : "🚆"} ${step.label}${mins}`));
   appendNote(box, step.note);
   return box;
 }
