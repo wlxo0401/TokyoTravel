@@ -40,7 +40,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   범용 `store(key)` 팩토리 위에 `checklist`(준비물, `tokyo-trip:checklist`) 하나.
   `is/toggle Checked` export. (일정 "가 본 장소" 체크는 없앴다.)
 - `js/render.js` — `trip` 객체를 DOM으로 그린다. 헤더 아래 **"바로가기"**(`renderQuicklinks`)를
-  먼저 그리고, 그 아래 최상위 탭 **여행 정보 / 일정**(`makeTabs`, variant "main").
+  먼저 그리고, 그 아래 최상위 탭 **일정 / 여행 정보**(`makeTabs`, variant "main"). 기본은 일정.
   - 바로가기 = 날씨 칩(누르면 `trip.links`가 `<dialog class="wx-modal">` 모달로) +
     지도 앱 버튼(`trip.tools`)을 한 줄(`.quicklinks-strip`, 가로 스크롤·줄바꿈 없음)에.
     토글 위에 고정.

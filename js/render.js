@@ -368,8 +368,8 @@ export function renderTrip(trip, root) {
   root.append(
     makeTabs(
       [
-        { id: "util", label: "여행 정보", render: () => renderUtility(trip) },
         { id: "plan", label: "일정", render: () => renderPlan(trip) },
+        { id: "util", label: "여행 정보", render: () => renderUtility(trip) },
       ],
       "main"
     )
