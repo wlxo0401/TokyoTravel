@@ -270,7 +270,7 @@ function flowStop(step) {
 
   (step.items || []).forEach((it) => {
     const row = el("div", "flow-item" + (it.optional ? " flow-item-opt" : ""));
-    row.append(el("div", null, it.optional ? `<span class="opt-tag">선택 · 경로 밖</span> ${it.text}` : it.text));
+    row.append(el("div", null, it.optional ? `<span class="opt-tag">선택</span> ${it.text}` : it.text));
     if (it.place || it.coords) {
       const btns = el("div", "btn-row");
       btns.append(linkBtn("지도", googlePlace(it.coords, it.place || it.text)));

@@ -56,7 +56,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   - 일정 = 날짜별 탭(`renderDayBody`). 각 일자 본문 = 해당 날짜 항공편 anchor(가는 편은
     "도착", 오는 편은 "출발") + `day.note` + `day.flow[]` 세로 타임라인.
     `flow[]` 스텝: `move`(이동 구간·소요시간), `stop`(지역+`items[]`, item은 `text`만이면
-    메모·`place`/`coords` 있으면 지도·길찾기 버튼·`optional:true`면 "선택 · 경로 밖" 흐리게),
+    메모·`place`/`coords` 있으면 지도·길찾기 버튼·`optional:true`면 "선택" 뱃지로 흐리게),
     `checkin`/`checkout`(accommodation에서 파생). `day.note`와 `move`·`stop`의 `note`는
     문자열 또는 문자열 배열(배열이면 줄마다 따로).
     체크박스·우선순위·필터는 없다.
