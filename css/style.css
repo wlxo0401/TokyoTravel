@@ -231,10 +231,10 @@ h2 { font-size: 1.05rem; margin: 0 0 10px; }
 }
 .flow-stay { font-weight: 600; }
 
-.flow-item {
-  padding: 8px 0;
-  border-top: 1px solid var(--line);
-}
-.flow-item:first-of-type { border-top: 0; padding-top: 4px; }
+.flow-stop .area-head { margin-bottom: 4px; }
+.flow-stop > .muted.small { margin-bottom: 4px; }
+
+.flow-item { padding: 8px 0; }
+.flow-item + .flow-item { border-top: 1px solid var(--line); }
 .flow-item .btn-row { margin-top: 6px; }
 .flow-item .btn { padding: 4px 10px; font-size: 0.78rem; }
