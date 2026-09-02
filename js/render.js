@@ -234,7 +234,11 @@ function renderChecklist(trip) {
 
 function renderUtility(trip) {
   const box = el("div");
-  box.append(renderQuicklinks(trip));
+  if (trip.visitJapanWeb) {
+    const row = el("div", "vjw-row");
+    row.append(linkBtn("🇯🇵 Visit Japan Web (입국 심사 QR)", trip.visitJapanWeb));
+    box.append(row);
+  }
   box.append(
     makeTabs([
       { id: "flights", label: "항공편", render: () => renderFlights(trip) },
@@ -351,6 +355,9 @@ export function renderTrip(trip, root) {
   header.append(el("h1", null, trip.title));
   header.append(el("div", "muted", trip.subtitle));
   root.append(header);
+
+  // "바로가기"(날씨 + 지도 앱)는 여행 정보/일정 토글 위에 고정 표시
+  root.append(renderQuicklinks(trip));
 
   root.append(
     makeTabs(

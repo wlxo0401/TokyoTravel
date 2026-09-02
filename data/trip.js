@@ -99,12 +99,14 @@ export const trip = {
     },
   ],
 
-  // 지도 앱·웹 바로가기 (특정 목적지 없이 앱만 실행). 유틸리티 상단에 버튼으로 표시.
+  // 지도 앱 바로가기 (특정 목적지 없이 앱만 실행). "바로가기" 줄에 버튼으로 표시.
   tools: [
     { label: "구글 지도", icon: "🗺️", url: "https://www.google.com/maps" },
     { label: "애플 지도", icon: "🍎", url: "https://maps.apple.com/" },
-    { label: "Visit Japan Web", icon: "🇯🇵", url: "https://services.digital.go.jp/ko/visit-japan-web/" },
   ],
+
+  // 입국 심사용 Visit Japan Web. 여행 정보 탭 상단에 버튼으로 표시.
+  visitJapanWeb: "https://services.digital.go.jp/ko/visit-japan-web/",
 
   // 준비물 체크리스트. 체크 상태는 기기(localStorage)에 저장 — 기기·브라우저마다 별도, 공유 안 됨.
   // key는 라벨을 바꿔도 유지되도록 고정 문자열로 둔다.

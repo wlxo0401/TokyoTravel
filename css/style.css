@@ -144,6 +144,9 @@ h2 { font-size: 1.05rem; margin: 0 0 10px; }
 .quicklinks-strip::-webkit-scrollbar { display: none; }
 .quicklinks-strip > * { flex: 0 0 auto; }
 
+/* 여행 정보 탭 상단 Visit Japan Web 버튼 */
+.vjw-row { margin-bottom: 14px; }
+
 /* 날씨 모달 (<dialog>) */
 .wx-modal {
   width: min(92vw, 360px);

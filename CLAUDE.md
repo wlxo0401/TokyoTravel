@@ -39,12 +39,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `js/state.js` — 체크 상태를 `localStorage`에 저장(기기·브라우저별, 공유 안 됨).
   범용 `store(key)` 팩토리 위에 `checklist`(준비물, `tokyo-trip:checklist`) 하나.
   `is/toggle Checked` export. (일정 "가 본 장소" 체크는 없앴다.)
-- `js/render.js` — `trip` 객체를 DOM으로 그린다. 최상위 탭 **여행 정보 / 일정**
-  (`makeTabs`, variant "main").
-  - 여행 정보 = "바로가기" 영역(`renderQuicklinks`) + 하위 탭 (항공편 · 숙소 · 준비물).
-    바로가기 = 날씨 칩(누르면 `trip.links`가 `<dialog class="wx-modal">` 모달로) +
+- `js/render.js` — `trip` 객체를 DOM으로 그린다. 헤더 아래 **"바로가기"**(`renderQuicklinks`)를
+  먼저 그리고, 그 아래 최상위 탭 **여행 정보 / 일정**(`makeTabs`, variant "main").
+  - 바로가기 = 날씨 칩(누르면 `trip.links`가 `<dialog class="wx-modal">` 모달로) +
     지도 앱 버튼(`trip.tools`)을 한 줄(`.quicklinks-strip`, 가로 스크롤·줄바꿈 없음)에.
-    준비물은 `trip.checklist`(그룹→아이템, 아이템
+    토글 위에 고정.
+  - 여행 정보 = 상단에 Visit Japan Web 버튼(`trip.visitJapanWeb`, `.vjw-row`) + 하위 탭
+    (항공편 · 숙소 · 준비물). 준비물은 `trip.checklist`(그룹→아이템, 아이템
     `key`로 체크 저장, 선택적 `url`), 상단에 "준비 완료 n / 전체" 카운터.
   - 항공편은 `flights[]`에서 파생 (`airline`·`flightNo`·출도착 시각/터미널/좌표).
     예약번호(`bookingRef`)는 개인정보라 데이터·화면 모두에서 다루지 않는다.
@@ -73,4 +74,5 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 1일차만 실제 동선으로 채워져 있고 2~4일차는 `stop`만 있는 틀 상태.
 
 `trip`의 최상위 키: `title`·`subtitle`·`dates`, `home`, `flights[]`, `accommodation`,
-`links[]`(날씨), `tools[]`(지도 앱 바로가기), `checklist[]`(준비물), `days[]`.
+`links[]`(날씨), `tools[]`(지도 앱 바로가기), `visitJapanWeb`(입국 심사 URL),
+`checklist[]`(준비물), `days[]`.
