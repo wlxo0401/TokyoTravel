@@ -144,9 +144,10 @@ export const trip = {
   // 일자별 계획: 시간표가 아니라 "도착 → 지역 → 숙소" 순서 있는 동선(flow).
   // flow[] 스텝 종류:
   //   { kind: "move",  label, mins?, note? }                              — 이동 구간
-  //   { kind: "stop",  area, coords, note?, items: [ { text, place?, coords? } ] }  — 지역 + 할 것들
+  //   { kind: "stop",  area, coords, note?, items: [ { text, place?, coords?, optional? } ] }  — 지역 + 할 것들
   //   { kind: "checkin" } | { kind: "checkout" }                          — accommodation에서 파생
   // items의 항목은 text만 있으면 메모, place/coords가 붙으면 지도·길찾기 버튼이 생긴다.
+  // optional: true면 "선택 · 경로 밖"으로 흐리게 표시 (동선에서 벗어난 곳).
   // 좌표가 없으면 지도 버튼은 이름 검색으로 degrade. 해당 날짜 항공편은 자동으로 맨 위 표시.
   days: [
     {
@@ -166,7 +167,6 @@ export const trip = {
           coords: { lat: 35.7138, lng: 139.7770 },
           items: [
             { text: "코인락커에 캐리어 맡기기 — 우에노역은 도쿄에서 락커 수 손꼽히게 많아 빈 칸 찾기 쉬움" },
-            { text: "여유되면 아메요코 시장 구경", place: "아메요코 시장", coords: { lat: 35.7089, lng: 139.7745 } },
           ],
         },
         {
@@ -180,7 +180,6 @@ export const trip = {
           coords: { lat: 35.7119, lng: 139.7960 },
           items: [
             { text: "센소지 · 가미나리몬 · 나카미세 거리", place: "센소지", coords: { lat: 35.7148, lng: 139.7967 } },
-            { text: "여유되면 스미다 강변에서 도쿄 스카이트리 뷰", place: "아즈마바시", coords: { lat: 35.7107, lng: 139.8005 } },
           ],
         },
         {
@@ -194,6 +193,8 @@ export const trip = {
           coords: { lat: 35.6984, lng: 139.7731 },
           items: [
             { text: "전자상가 · 요도바시 아키바 · 애니메이트 구경", place: "아키하바라 전자상가", coords: { lat: 35.6989, lng: 139.7719 } },
+            { text: "GENERAL STORE RAILYARD 秋葉原 — 아키하바라역 안 철도 굿즈 기념품샵 (쇼와도리 개찰구 쪽)", place: "GENERAL STORE RAILYARD 秋葉原", coords: { lat: 35.6981328, lng: 139.7747761 } },
+            { text: "코미야 상점(小宮商店) — 일본 전통 우산 가게. 아키하바라에서 남동쪽으로 약 1.5km 떨어져 있어 일정과 별개로 들르게 되면.", place: "小宮商店 Komiya Shoten", coords: { lat: 35.691993, lng: 139.783905 }, optional: true },
           ],
         },
         {

@@ -241,3 +241,17 @@ h2 { font-size: 1.05rem; margin: 0 0 10px; }
 .flow-item + .flow-item { border-top: 1px solid var(--line); }
 .flow-item .btn-row { margin-top: 6px; }
 .flow-item .btn { padding: 4px 10px; font-size: 0.78rem; }
+
+/* 경로에서 벗어난 선택 항목 */
+.flow-item-opt { color: var(--muted); }
+.opt-tag {
+  display: inline-block;
+  margin-right: 6px;
+  padding: 1px 7px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  border: 1px dashed var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  white-space: nowrap;
+}
