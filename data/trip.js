@@ -34,7 +34,7 @@ export const trip = {
       arrive: {
         airport: "NRT",
         name: "나리타 국제공항",
-        terminal: "TODO",
+        terminal: "T1",
         time: "2026-09-10T09:55",
         coords: { lat: 35.7719, lng: 140.3929 },
       },
@@ -47,7 +47,7 @@ export const trip = {
       depart: {
         airport: "NRT",
         name: "나리타 국제공항",
-        terminal: "TODO",
+        terminal: "T1",
         time: "2026-09-13T19:15",
         coords: { lat: 35.7719, lng: 140.3929 },
       },
