@@ -283,11 +283,11 @@ function flowStop(step) {
   return box;
 }
 
-// move 스텝: 이동 구간 (노선 + 소요시간)
+// move 스텝: 이동 구간 (노선 + 소요시간). walk:true면 도보 아이콘.
 function flowMove(step) {
   const box = el("div", "flow-move");
   const mins = step.mins ? ` <span class="muted">· 약 ${step.mins}분</span>` : "";
-  box.append(el("div", null, `🚆 ${step.label}${mins}`));
+  box.append(el("div", null, `${step.walk ? "🚶" : "🚆"} ${step.label}${mins}`));
   appendNote(box, step.note);
   return box;
 }

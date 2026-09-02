@@ -71,10 +71,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## 데이터 모델 요약
 
 `trip.days[].flow[]` (순서 있는 스텝 배열)이 "유동적 계획"의 핵심이다. 시간표가 아니라
-도착→지역→숙소로 이어지는 느슨한 동선. 스텝은 `move`/`stop`/`checkin`/`checkout`.
+지역→지역으로 이어지는 느슨한 동선(구간 이동 시간만 표시, 시각은 안 박음).
+스텝은 `move`(`walk:true`면 도보 아이콘)/`stop`/`checkin`/`checkout`.
 고정 일정(비행기/체크인)은 데이터 중복 없이 `flights`와 `accommodation`에서 파생한다
 (`checkin`/`checkout` 스텝은 위치만 표시하고 시각은 `accommodation`에서 읽음).
-1일차만 실제 동선으로 채워져 있고 2~4일차는 `stop`만 있는 틀 상태.
+1일차 도착·야간, 2일차 가와구치코 당일치기, 3일차 하라주쿠·시부야 도보, 4일차 도쿄역·고쿄·긴자+귀국.
 
 `trip`의 최상위 키: `title`·`subtitle`·`dates`, `home`, `flights[]`, `accommodation`,
 `links[]`(날씨), `tools[]`(지도 앱 바로가기), `visitJapanWeb`(입국 심사 URL),
