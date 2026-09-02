@@ -130,7 +130,7 @@ export const trip = {
       items: [
         { key: "charger", label: "충전기 · 케이블" },
         { key: "plug", label: "변환 플러그 (일본 A타입 · 100V)" },
-        { key: "clothes", label: "옷 (일수 + 1)" },
+        { key: "clothes", label: "옷" },
         { key: "toiletries", label: "세면도구" },
         { key: "battery", label: "보조배터리" },
         { key: "shoes", label: "걷기 편한 신발" },
