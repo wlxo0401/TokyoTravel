@@ -323,7 +323,9 @@ function renderDayBody(trip, day) {
   });
   if (anchors.length) wrap.append(el("div", "anchors small", anchors.join("<br>")));
 
-  if (day.note) wrap.append(el("div", "note small", day.note));
+  // day.note는 문자열 또는 문자열 배열
+  if (day.note)
+    (Array.isArray(day.note) ? day.note : [day.note]).forEach((n) => wrap.append(el("div", "note small", n)));
 
   const flow = day.flow || [];
   if (flow.length) {
