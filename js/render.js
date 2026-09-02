@@ -15,12 +15,6 @@ const CATEGORY = {
   activity: "🎯",
   transport: "🚆",
 };
-const PRIORITY = {
-  must: { label: "꼭", cls: "p-must" },
-  want: { label: "가고싶음", cls: "p-want" },
-  maybe: { label: "여유되면", cls: "p-maybe" },
-};
-
 const el = (tag, cls, html) => {
   const n = document.createElement(tag);
   if (cls) n.className = cls;
@@ -261,33 +255,6 @@ function renderUtility(trip) {
 
 /* ---------- 일정 ---------- */
 
-let planFilter = "all";
-
-function applyFilter(scope) {
-  scope.querySelectorAll(".place").forEach((p) => {
-    p.hidden = planFilter !== "all" && p.dataset.priority !== planFilter;
-  });
-}
-
-function renderFilter(scope) {
-  const bar = el("div", "filter");
-  [
-    ["all", "전체"],
-    ["must", "꼭"],
-    ["want", "가고싶음"],
-    ["maybe", "여유되면"],
-  ].forEach(([val, label]) => {
-    const b = el("button", "chip" + (planFilter === val ? " on" : ""), label);
-    b.addEventListener("click", () => {
-      planFilter = val;
-      bar.querySelectorAll(".chip").forEach((c) => c.classList.toggle("on", c === b));
-      applyFilter(scope);
-    });
-    bar.append(b);
-  });
-  return bar;
-}
-
 function placeRow(day, area, place) {
   const row = el("div", "place");
   const key = `${day.date}|${area.name}|${place.name}`;
@@ -301,11 +268,8 @@ function placeRow(day, area, place) {
     check.textContent = now ? "✓" : "";
   });
 
-  const p = PRIORITY[place.priority] || PRIORITY.maybe;
   const main = el("div", "place-main");
-  main.append(
-    el("div", "place-name", `${CATEGORY[place.category] || "📍"} ${place.name} <span class="pill ${p.cls}">${p.label}</span>`)
-  );
+  main.append(el("div", "place-name", `${CATEGORY[place.category] || "📍"} ${place.name}`));
   if (place.note) main.append(el("div", "muted small", place.note));
 
   const btns = el("div", "btn-row");
@@ -313,7 +277,6 @@ function placeRow(day, area, place) {
   btns.append(linkBtn("길찾기", googleDirections({ destination: place.coords || place.name, mode: "walking" })));
   main.append(btns);
 
-  row.dataset.priority = place.priority;
   row.append(check, main);
   return row;
 }
@@ -349,13 +312,11 @@ function renderDayBody(trip, day) {
 
   if (!day.areas.length) wrap.append(el("div", "muted small", "계획 미정 — 자유롭게 채워보세요."));
 
-  applyFilter(wrap);
   return wrap;
 }
 
 function renderPlan(trip) {
   const box = el("div");
-  box.append(renderFilter(box));
   box.append(
     makeTabs(
       trip.days.map((day, i) => {

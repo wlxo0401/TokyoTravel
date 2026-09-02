@@ -28,7 +28,7 @@ Por eso esta app trata la planificación como dos fases separadas.
 - **Durante el viaje — consulta (solo lectura)**: aquí no editas el plan. Sirve para
   **consultar lo que preparaste y decidir rápido sobre la marcha.**
   - Ve la ruta de hoy de un vistazo con las pestañas por fecha
-  - Revisa lugares candidatos por zona solo con una prioridad («imprescindible / me apetece / si hay tiempo»), no un horario
+  - Consulta una lista flexible de lugares candidatos por zona y elige sobre la marcha, no un horario
   - Un toque para indicaciones en el mapa (Naver para los tramos en Corea, Google para los de Japón)
   - Marca los lugares que ya has visitado (se guarda localmente en tu dispositivo)
 

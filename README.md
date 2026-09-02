@@ -28,7 +28,7 @@ So this app treats planning as two separate phases.
 - **During the trip — reference (read-only)**: you don't edit the plan here. It's for
   **checking what you prepared and deciding fast on the spot.**
   - See today's route at a glance with date tabs
-  - Browse candidate places per area with a priority only ("must / want / if there's time") — not a timetable
+  - Browse a loose list of candidate places per area and pick on the spot — not a timetable
   - One tap for map directions (Naver for legs in Korea, Google for legs in Japan)
   - Check off places you've been to (saved locally on your device)
 

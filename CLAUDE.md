@@ -51,10 +51,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   - 숙소는 상세 주소·좌표를 저장하지 않는다. `accommodation.url`(에어비앤비 여행
     목록) + `accommodation.stations[]`(주변 역 이름·좌표)로 "예약 확인 / 역별 길찾기"
     버튼만 만든다.
-  - 일정 = 우선순위 필터 칩 + 날짜별 탭(`renderDayBody`). 각 일자 본문에 해당 날짜의
+  - 일정 = 날짜별 탭(`renderDayBody`)만. 각 일자 본문에 해당 날짜의
     항공편·체크인/아웃 "고정 일정"을 자동으로 끼워 넣는다(anchors). 나머지는
-    `지역 → 후보 장소(priority: must/want/maybe)` 계층. 필터 상태는 모듈 변수
-    `planFilter`로 유지되어 날짜 탭을 바꿔도 `applyFilter`가 다시 적용된다.
+    `지역 → 후보 장소` 계층으로 나열만 한다. 데이터에 `priority`(must/want/maybe)
+    필드는 남아 있지만 화면에는 표시하지 않고 필터도 없다.
 - `js/app.js` — 진입점. 렌더 호출 + 네이버 딥링크 실패 시 웹 폴백 핸들러.
 
 ## README 다국어

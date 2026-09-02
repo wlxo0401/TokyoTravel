@@ -68,7 +68,7 @@ export const trip = {
     area: "신주쿠",
     address: "신주쿠",
     coords: null, // 정확 좌표는 저장 안 함
-    checkIn: "2026-09-10T15:00",
+    checkIn: "2026-09-10T16:00",
     checkOut: "2026-09-13T10:00",
     url: "https://www.airbnb.com/trips",
     notes: "상세 주소 · 체크인 방법 · 도어락 · 와이파이는 에어비앤비 예약/메시지에서 확인",
@@ -140,7 +140,7 @@ export const trip = {
   ],
 
   // 일자별 계획: 시간표가 아니라 "지역 → 후보 장소" 구조. 순서는 느슨한 가이드.
-  // priority: "must"(꼭) | "want"(가고싶음) | "maybe"(여유되면)
+  // priority: "must" | "want" | "maybe" — 데이터에는 남겨두지만 현재 화면에는 표시하지 않음.
   // category: "food" | "cafe" | "shopping" | "sight" | "activity" | "transport"
   days: [
     {
